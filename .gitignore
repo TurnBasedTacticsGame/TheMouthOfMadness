@@ -1,0 +1,19 @@
+# --- Repo ---
+
+Builds/
+
+# --- ParrelSync ---
+
+/*_clone_*/*
+
+# --- Reaper DAW ---
+
+*.rpp-bak
+
+# --- Jetbrains ---
+
+.idea/
+
+# --- Git Subrepo ---
+
+.git-rewrite/
