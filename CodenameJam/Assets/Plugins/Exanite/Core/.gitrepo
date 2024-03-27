@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/Exanite/Exanite.Core.git
+	branch = main
+	commit = 84481205f28f36de5c88ce099eeef083c43914fc
+	parent = 51053e3eb9cb867abb1e6eafb59410728e388f02
+	method = merge
+	cmdver = 0.4.3

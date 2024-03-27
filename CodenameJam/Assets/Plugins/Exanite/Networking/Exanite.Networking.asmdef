@@ -1,0 +1,30 @@
+{
+    "name": "Exanite.Networking",
+    "rootNamespace": "",
+    "references": [
+        "Exanite.Core",
+        "LiteNetLib",
+        "UniDi.UniDi",
+        "UniTask",
+        "Unity.Burst",
+        "Unity.Collections",
+        "Unity.Networking.Transport",
+        "Unity.Services.Authentication",
+        "Unity.Services.Relay"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": true,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.transport",
+            "expression": "",
+            "define": "UNITY_TRANSPORT"
+        }
+    ],
+    "noEngineReferences": false
+}
