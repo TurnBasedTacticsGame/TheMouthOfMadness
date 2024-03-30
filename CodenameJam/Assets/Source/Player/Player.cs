@@ -109,7 +109,8 @@ namespace Source.Player
             var filter = new NavMeshQueryFilter();
             filter.areaMask |= 1 << 0;
 
-            if (NavMesh.CalculatePath(transform.position, destination, filter, path))
+            NavMesh.CalculatePath(transform.position, destination, filter, path);
+            if (path.status != NavMeshPathStatus.PathInvalid)
             {
                 waypoints.Clear();
                 for (var i = 0; i < path.corners.Length; i++)
