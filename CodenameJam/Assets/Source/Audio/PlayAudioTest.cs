@@ -10,7 +10,7 @@ public class PlayAudioTest : MonoBehaviour
     [ContextMenu("Play clip at 3D location")]
     private void Test()
     {
-        virtualAudioSource.Synced3DAudio.AudioSource.clip = clip;
-        virtualAudioSource.Synced3DAudio.AudioSource.Play();
+        virtualAudioSource.AudioSource.clip = clip;
+        virtualAudioSource.AudioSource.Play();
     }
 }
