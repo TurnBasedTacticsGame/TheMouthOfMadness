@@ -39,43 +39,63 @@ namespace Source.Player
 
         private void Update()
         {
-            if (state == PlayerState.Waiting)
+            switch (state)
             {
-                if (Input.GetKeyDown(KeyCode.Mouse0))
+                case PlayerState.Waiting:
                 {
-                    var mousePosition = GetMouseWorldPosition();
-                    if (TryFindPath(mousePosition))
+                    if (Input.GetKeyDown(KeyCode.Mouse0))
                     {
-                        targetPosition.position = waypoints[waypoints.Count - 1];
+                        var mousePosition = GetMouseWorldPosition();
+                        if (TryFindPath(mousePosition))
+                        {
+                            targetPosition.position = waypoints[waypoints.Count - 1];
+                        }
                     }
-                }
 
-                if (Input.GetKeyDown(KeyCode.Mouse1))
+                    if (Input.GetKeyDown(KeyCode.Mouse1))
+                    {
+                        var mousePosition = GetMouseWorldPosition();
+                        targetFlashlightPosition.position = mousePosition;
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.Return))
+                    {
+                        state = PlayerState.Moving;
+                    }
+
+                    break;
+                }
+                case PlayerState.Moving:
                 {
-                    var mousePosition = GetMouseWorldPosition();
-                    targetFlashlightPosition.position = mousePosition;
+                    var targetFlashlightRotation = Quaternion.Euler(0, 0, GetAngleDegrees(targetFlashlightPosition.position - transform.position));
+                    var hasReachedTargetPosition = waypoints.Count == 0;
+                    var hasReachedTargetRotation = Quaternion.Angle(targetFlashlightRotation, flashlight.rotation) < 0.01f;
+
+                    if (hasReachedTargetPosition && hasReachedTargetRotation)
+                    {
+                        state = PlayerState.Waiting;
+
+                        break;
+                    }
+
+                    if (waypoints.Count > 0)
+                    {
+                        var direction = waypoints[0] - transform.position;
+                        direction = waypoints.Count == 1 ? Vector3.ClampMagnitude(direction, 1) : direction.normalized;
+
+                        rb.velocity = Vector3.ClampMagnitude(direction, 1) * movementSpeed;
+
+                        var hasReachedCurrentWaypoint = (waypoints[0] - transform.position).sqrMagnitude < 0.01f;
+                        if (hasReachedCurrentWaypoint)
+                        {
+                            waypoints.RemoveAt(0);
+                        }
+                    }
+
+                    flashlight.rotation = Quaternion.RotateTowards(flashlight.rotation, targetFlashlightRotation, rotationSpeed * Time.deltaTime);
+
+                    break;
                 }
-
-                if (Input.GetKeyDown(KeyCode.Return))
-                {
-                    state = PlayerState.Moving;
-                }
-            }
-
-            if (state == PlayerState.Moving)
-            {
-                var targetFlashlightRotation = Quaternion.Euler(0, 0, GetAngleDegrees(targetFlashlightPosition.position - transform.position));
-                var hasReachedTargetPosition = (targetPosition.position - transform.position).sqrMagnitude < 0.01f;
-                var hasReachedTargetRotation = Quaternion.Angle(targetFlashlightRotation, flashlight.rotation) < 0.01f;
-
-                if (hasReachedTargetPosition && hasReachedTargetRotation)
-                {
-                    state = PlayerState.Waiting;
-                }
-
-                // Todo Use pathfinding
-                rb.velocity = Vector3.ClampMagnitude(targetPosition.position - transform.position, 1) * movementSpeed;
-                flashlight.rotation = Quaternion.RotateTowards(flashlight.rotation, targetFlashlightRotation, rotationSpeed * Time.deltaTime);
             }
         }
 
