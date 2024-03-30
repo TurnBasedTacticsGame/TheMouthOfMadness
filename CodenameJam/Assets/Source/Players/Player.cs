@@ -14,28 +14,31 @@ namespace Source.Players
         [Header("Configuration")]
         [SerializeField] private float currentHealth = 5;
         [SerializeField] private float maxHealth = 5;
+        [SerializeField] private float maxTimeSpentMoving = 8f;
+        [SerializeField] public float moveCooldown = 0.25f;
 
         [Inject] private EventTracker tracker;
         [Inject] private Camera mainCamera;
 
-        public PlayerState state;
+        public PlayerState state = PlayerState.Moving;
 
         public Transform targetPosition;
         public Transform targetFlashlightPosition;
         public Transform flashlight;
-        public float timeWaited;
 
         public float movementSpeed = 5;
         public float rotationSpeed = 90;
-        public float turnWaitTime = 1;
-        public float maxTurnTime = 10;
 
         private List<Vector3> waypoints = new();
         private NavMeshPath path;
 
+        public float timeSpentWaiting;
+        public float timeSpentMoving;
+
         private void Start()
         {
             path = new NavMeshPath();
+            TryFindPath(targetPosition.position);
         }
 
         private void Update()
@@ -44,6 +47,9 @@ namespace Source.Players
             {
                 case PlayerState.Waiting:
                 {
+                    timeSpentWaiting += Time.deltaTime;
+                    timeSpentMoving = 0;
+
                     if (Time.timeScale > 0.1f)
                     {
                         break;
@@ -73,6 +79,14 @@ namespace Source.Players
                 }
                 case PlayerState.Moving:
                 {
+                    timeSpentMoving += Time.deltaTime;
+                    timeSpentWaiting = 0;
+
+                    if (timeSpentMoving > maxTimeSpentMoving)
+                    {
+                        state = PlayerState.Waiting;
+                    }
+
                     break;
                 }
             }
