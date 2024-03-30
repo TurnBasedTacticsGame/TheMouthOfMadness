@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class VirtualAudioListener : MonoBehaviour
 {
-    public AudioListener Synced3DListener { get; private set; }
+    public AudioListener Synced3DListener => audioListener;
 
     [SerializeField] private AudioListener audioListener;
 
