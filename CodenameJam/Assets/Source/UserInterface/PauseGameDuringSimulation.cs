@@ -24,7 +24,9 @@ namespace Source.UserInterface
 
         private void Update()
         {
-            var targetTimeScale = player.state == Player.PlayerState.Moving ? 1 : 0;
+            var shouldPause = player.state == Player.PlayerState.Waiting && player.timeSpentWaiting > player.moveCooldown;
+
+            var targetTimeScale = shouldPause ? 0 : 1;
             timeScale = Mathf.MoveTowards(timeScale, targetTimeScale, Time.unscaledDeltaTime * transitionSpeed);
 
             UpdateTimeScale();
