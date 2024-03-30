@@ -863,6 +863,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8587092651424086224, guid: 64bec8440708384489c54851111c67c5, type: 3}
+      propertyPath: field of view
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 8587092651424086224, guid: 64bec8440708384489c54851111c67c5, type: 3}
+      propertyPath: far clip plane
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8587092651424086224, guid: 64bec8440708384489c54851111c67c5, type: 3}
+      propertyPath: near clip plane
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8587092651424086224, guid: 64bec8440708384489c54851111c67c5, type: 3}
+      propertyPath: orthographic size
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8587092651424086225, guid: 64bec8440708384489c54851111c67c5, type: 3}
       propertyPath: m_RootOrder
       value: 1
