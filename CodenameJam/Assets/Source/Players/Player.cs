@@ -68,42 +68,42 @@ namespace Source.Players
                 }
                 case PlayerState.Moving:
                 {
-                    var targetFlashlightRotation = Quaternion.Euler(0, 0, GetAngleDegrees(targetFlashlightPosition.position - transform.position));
-                    var hasReachedTargetPosition = waypoints.Count == 0;
-                    var hasReachedTargetRotation = Quaternion.Angle(targetFlashlightRotation, flashlight.rotation) < 0.01f;
-
-                    if (hasReachedTargetPosition && hasReachedTargetRotation)
-                    {
-                        state = PlayerState.Waiting;
-
-                        break;
-                    }
-
-                    if (waypoints.Count > 0)
-                    {
-                        var direction = waypoints[0] - transform.position;
-                        direction = waypoints.Count == 1 ? Vector3.ClampMagnitude(direction, 1) : direction.normalized;
-
-                        rb.velocity = Vector3.ClampMagnitude(direction, 1) * movementSpeed;
-
-                        var hasReachedCurrentWaypoint = (waypoints[0] - transform.position).sqrMagnitude < 0.01f;
-                        if (hasReachedCurrentWaypoint)
-                        {
-                            waypoints.RemoveAt(0);
-                        }
-                    }
-
-                    flashlight.rotation = Quaternion.RotateTowards(flashlight.rotation, targetFlashlightRotation, rotationSpeed * Time.deltaTime);
-
                     break;
                 }
             }
+
+            UpdateMovement();
         }
 
-        // private bool HasRemainingMovement()
-        // {
-        //
-        // }
+        private void UpdateMovement()
+        {
+            var targetFlashlightRotation = Quaternion.Euler(0, 0, GetAngleDegrees(targetFlashlightPosition.position - transform.position));
+            var hasReachedTargetPosition = waypoints.Count == 0;
+            var hasReachedTargetRotation = Quaternion.Angle(targetFlashlightRotation, flashlight.rotation) < 0.01f;
+
+            if (state == PlayerState.Moving && hasReachedTargetPosition && hasReachedTargetRotation)
+            {
+                state = PlayerState.Waiting;
+
+                return;
+            }
+
+            if (waypoints.Count > 0)
+            {
+                var direction = waypoints[0] - transform.position;
+                direction = waypoints.Count == 1 ? Vector3.ClampMagnitude(direction, 1) : direction.normalized;
+
+                rb.velocity = Vector3.ClampMagnitude(direction, 1) * movementSpeed;
+
+                var hasReachedCurrentWaypoint = (waypoints[0] - transform.position).sqrMagnitude < 0.01f;
+                if (hasReachedCurrentWaypoint)
+                {
+                    waypoints.RemoveAt(0);
+                }
+            }
+
+            flashlight.rotation = Quaternion.RotateTowards(flashlight.rotation, targetFlashlightRotation, rotationSpeed * Time.deltaTime);
+        }
 
         private bool TryFindPath(Vector3 destination)
         {
