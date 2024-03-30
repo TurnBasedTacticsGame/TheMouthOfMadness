@@ -15,8 +15,14 @@ namespace Source.Convert2DTo3D
         
         private List<Mesh> meshes = new();
 
-        // Start is called before the first frame update
-        private void Start()
+        [ContextMenu("Generate new mesh colliders")]
+        private void GenerateNewMeshColliders()
+        {
+            CleanupMeshes();
+            GenerateMeshColliders();
+        }
+        
+        private void GenerateMeshColliders()
         {
             foreach (var collider in FindObjectsOfType<Collider2D>())
             {
@@ -104,10 +110,9 @@ namespace Source.Convert2DTo3D
                 }
             }
         }
-
-        private void OnDestroy()
+        
+        private void CleanupMeshes()
         {
-            // Cleanup meshes, not part of prefab
             for (var i = meshes.Count - 1; i > 0; i--)
             {
                 Destroy(meshes[i]);
