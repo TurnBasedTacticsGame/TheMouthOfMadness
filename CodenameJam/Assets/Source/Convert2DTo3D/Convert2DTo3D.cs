@@ -12,7 +12,8 @@ namespace Source.Convert2DTo3D
 
         [Header("Configuration")] 
         [SerializeField] private bool showMeshes = true;
-        
+
+        private List<GameObject> meshObjects = new();
         private List<Mesh> meshes = new();
 
         [ContextMenu("Generate new mesh colliders")]
@@ -107,15 +108,20 @@ namespace Source.Convert2DTo3D
                     {
                         meshRenderer.enabled = showMeshes;
                     }
+                    
+                    meshObjects.Add(meshObject);
                 }
             }
         }
         
         private void CleanupMeshes()
         {
-            for (var i = meshes.Count - 1; i > 0; i--)
+            for (var i = meshes.Count - 1; i >= 0; i--)
             {
-                Destroy(meshes[i]);
+                DestroyImmediate(meshObjects[i]);
+                DestroyImmediate(meshes[i]);
+                meshObjects.RemoveAt(i);
+                meshes.RemoveAt(i);
             }
         }
 
