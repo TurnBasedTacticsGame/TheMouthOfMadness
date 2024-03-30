@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,118 +11,115 @@ namespace Source.Convert2DTo3D
         [SerializeField] private Collider cubePrefab;
         [SerializeField] private Material defaultMeshMaterial;
 
-        [Header("Configuration")] 
+        [Header("Configuration")]
         [SerializeField] private float colliderHeight = 1000;
-        
-        private GameObject collider3DRoot;
-        private List<Mesh> meshes = new ();
+
+        private List<Mesh> meshes = new();
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
-            var allColliders = FindObjectsOfType<Collider2D>();
-
-            collider3DRoot = new GameObject("Collider3DRoot");
-
-            foreach (var collider in allColliders)
+            foreach (var collider in FindObjectsOfType<Collider2D>())
             {
-                if (collider is CircleCollider2D circleCollider2D)
+                switch (collider)
                 {
-                    var cylinder = GameObject.Instantiate(cylinderPrefab, collider.transform.position, Quaternion.identity);
-                    var diameter = circleCollider2D.radius * 2;
-                    cylinder.transform.localScale = new Vector3(diameter, colliderHeight, diameter); // Cylinder has height 1 up, 1 down.
-                    cylinder.transform.Rotate(new Vector3(90, 0, 0), Space.Self);
-                    
-                    cylinder.transform.SetParent(collider3DRoot.transform);
-                } 
-                else if (collider is BoxCollider2D boxCollider2D)
-                {
-                    var cube = GameObject.Instantiate(cubePrefab, collider.transform.position, Quaternion.identity);
-                    cube.transform.localScale = new Vector3(boxCollider2D.size.x, colliderHeight * 2, boxCollider2D.size.y); // Cube has height 0.5 up, 0.5 down
-                    cube.transform.Rotate(new Vector3(90, 0, 0), Space.Self);
-                    
-                    cube.transform.SetParent(collider3DRoot.transform);
-                } 
-                else if (collider is PolygonCollider2D polygonCollider2D)
-                {
-                    var meshObject = new GameObject("MeshCollider3D");
-                    
-                    var meshFilter = meshObject.AddComponent<MeshFilter>();
-                    var mesh = polygonCollider2D.CreateMesh(false, false);
+                    case CircleCollider2D circleCollider:
+                    {
+                        var cylinder = Instantiate(cylinderPrefab, collider.transform.position, Quaternion.identity);
+                        var diameter = circleCollider.radius * 2;
+                        cylinder.transform.localScale = new Vector3(diameter, colliderHeight, diameter); // Cylinder has height 1 up, 1 down.
+                        cylinder.transform.Rotate(new Vector3(90, 0, 0), Space.Self);
 
-                    var meshData = new MeshData();
-                    meshData.Vertices = mesh.vertices.ToList();
-                    
-                    // PolygonCollider is translated by a position already when converted to mesh, shortcut to translate back
-                    for (var i = 0; i < meshData.Vertices.Count; i++)
-                    {
-                        meshData.Vertices[i] -= collider.transform.position;
-                    }
+                        cylinder.transform.SetParent(transform);
 
-                    for (var i = 0; i < mesh.vertices.Length; i++)
-                    {
-                        
+                        break;
                     }
-                    
-                    // Duplicate vertices, increase or decrease height of both, consider normals
-                    var originalVertices = meshData.Vertices.Count;
-                    for (var i = 0; i < originalVertices; i++)
+                    case BoxCollider2D boxCollider:
                     {
-                        var near1 = meshData.Vertices[i] + new Vector3(0,0, -1);
-                        var far1 = meshData.Vertices[i] + new Vector3(0,0, 1);
-                        
-                        var near2 = meshData.Vertices[i+1] + new Vector3(0,0, -1);
-                        var far2 = meshData.Vertices[i+1] + new Vector3(0,0, 1);
-                        
-                        var quad = new Quad
+                        var cube = Instantiate(cubePrefab, collider.transform.position, Quaternion.identity);
+                        cube.transform.localScale = new Vector3(boxCollider.size.x, colliderHeight * 2, boxCollider.size.y); // Cube has height 0.5 up, 0.5 down
+                        cube.transform.Rotate(new Vector3(90, 0, 0), Space.Self);
+
+                        cube.transform.SetParent(transform);
+
+                        break;
+                    }
+                    case PolygonCollider2D polygonCollider:
+                    {
+                        var meshObject = new GameObject("MeshCollider3D");
+
+                        var meshFilter = meshObject.AddComponent<MeshFilter>();
+                        var mesh = polygonCollider.CreateMesh(false, false);
+
+                        var meshData = new MeshData();
+                        meshData.Vertices = mesh.vertices.ToList();
+
+                        // PolygonCollider is translated by a position already when converted to mesh, shortcut to translate back
+                        for (var i = 0; i < meshData.Vertices.Count; i++)
                         {
-                            BottomLeft = near2,
-                            BottomRight = near1,
-                            TopLeft = far2,
-                            TopRight = far1
-                        };
-                        
-                        quad.Triangulate(meshData);
+                            meshData.Vertices[i] -= collider.transform.position;
+                        }
+
+                        for (var i = 0; i < mesh.vertices.Length; i++) {}
+
+                        // Duplicate vertices, increase or decrease height of both, consider normals
+                        var originalVertices = meshData.Vertices.Count;
+                        for (var i = 0; i < originalVertices; i++)
+                        {
+                            var near1 = meshData.Vertices[i] + new Vector3(0, 0, -1);
+                            var far1 = meshData.Vertices[i] + new Vector3(0, 0, 1);
+
+                            var near2 = meshData.Vertices[i + 1] + new Vector3(0, 0, -1);
+                            var far2 = meshData.Vertices[i + 1] + new Vector3(0, 0, 1);
+
+                            var quad = new Quad
+                            {
+                                BottomLeft = near2,
+                                BottomRight = near1,
+                                TopLeft = far2,
+                                TopRight = far1,
+                            };
+
+                            quad.Triangulate(meshData);
+                        }
+
+                        /*
+                        var triangles = mesh.triangles.ToList();
+                        var originalTrianglesCount = triangles.Count;
+
+                        // Make triangle for far end -> make boxes between all new vertices
+                        for (var i = 0; i < originalTrianglesCount; i+=3)
+                        {
+                            // Recreate original triangles but with new vertices (old + offset)
+                            var newIndex1 = triangles[i] + originalVerticesCount;
+                            var newIndex2 = triangles[i+1] + originalVerticesCount;
+                            var newIndex3 = triangles[i+2] + originalVerticesCount;
+
+                            // Flip indices to flip implicit normals (faces in opposite direction -> triangle indices reverse clock rotation)
+                            triangles.Add(newIndex1);
+                            triangles.Add(newIndex3);
+                            triangles.Add(newIndex2);
+                        }
+                        */
+
+                        mesh.SetVertices(meshData.Vertices);
+                        mesh.SetTriangles(meshData.Triangles, 0);
+
+                        meshes.Add(mesh);
+                        meshFilter.sharedMesh = mesh;
+
+                        var meshRenderer = meshObject.AddComponent<MeshRenderer>();
+                        meshRenderer.sharedMaterial = defaultMeshMaterial;
+
+                        meshObject.transform.position = collider.transform.position;
+                        meshObject.transform.Rotate(new Vector3(90, 0, 0), Space.Self);
+                        meshObject.transform.SetParent(transform);
+
+                        break;
                     }
-                    
-                    /*
-                    var triangles = mesh.triangles.ToList();
-                    var originalTrianglesCount = triangles.Count;
-                    
-                    // Make triangle for far end -> make boxes between all new vertices
-                    for (var i = 0; i < originalTrianglesCount; i+=3)
-                    {
-                        // Recreate original triangles but with new vertices (old + offset)
-                        var newIndex1 = triangles[i] + originalVerticesCount;
-                        var newIndex2 = triangles[i+1] + originalVerticesCount;
-                        var newIndex3 = triangles[i+2] + originalVerticesCount;
-                        
-                        // Flip indices to flip implicit normals (faces in opposite direction -> triangle indices reverse clock rotation)
-                        triangles.Add(newIndex1);
-                        triangles.Add(newIndex3);
-                        triangles.Add(newIndex2);
-                    }
-                    */
-
-                    mesh.SetVertices(meshData.Vertices);
-                    mesh.SetTriangles(meshData.Triangles, 0);
-
-                    meshes.Add(mesh);
-                    meshFilter.sharedMesh = mesh;
-
-                    var meshRenderer = meshObject.AddComponent<MeshRenderer>();
-                    meshRenderer.sharedMaterial = defaultMeshMaterial;
-                    
-                    meshObject.transform.position = collider.transform.position;
-                    meshObject.transform.Rotate(new Vector3(90, 0, 0), Space.Self);
-                    meshObject.transform.SetParent(collider3DRoot.transform);
                 }
             }
-            
-            // Simulate transform along x-axis
-            collider3DRoot.transform.Rotate(new Vector3(-90, 0, 0), Space.Self);
         }
-
 
         private void OnDestroy()
         {
@@ -133,7 +129,7 @@ namespace Source.Convert2DTo3D
                 Destroy(meshes[i]);
             }
         }
-        
+
         private class MeshData
         {
             public List<Vector3> Vertices = new();
