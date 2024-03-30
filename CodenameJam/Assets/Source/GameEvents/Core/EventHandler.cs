@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Source.GameEvents
+namespace Source.GameEvents.Core
 {
     public abstract class EventHandler : MonoBehaviour
     {

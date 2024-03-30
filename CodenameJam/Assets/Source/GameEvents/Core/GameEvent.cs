@@ -1,6 +1,6 @@
 using Cysharp.Threading.Tasks;
 
-namespace Source.GameEvents
+namespace Source.GameEvents.Core
 {
     public abstract class GameEvent
     {
