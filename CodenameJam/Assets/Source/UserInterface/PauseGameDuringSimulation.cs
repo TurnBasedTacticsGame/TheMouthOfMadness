@@ -13,15 +13,26 @@ namespace Source.UserInterface
         private float currentSmoothVelocity;
         private float initialFixedDeltaTime;
 
-        private void Start()
+        private float timeScale = 0;
+
+        private void Awake()
         {
             initialFixedDeltaTime = Time.fixedDeltaTime;
+
+            UpdateTimeScale();
         }
 
         private void Update()
         {
             var targetTimeScale = player.state == Player.PlayerState.Moving ? 1 : 0;
-            Time.timeScale = Mathf.SmoothDamp(Time.timeScale, targetTimeScale, ref currentSmoothVelocity, smoothTime, float.PositiveInfinity, Time.unscaledDeltaTime);
+            timeScale = Mathf.SmoothDamp(timeScale, targetTimeScale, ref currentSmoothVelocity, smoothTime, float.PositiveInfinity, Time.unscaledDeltaTime);
+
+            UpdateTimeScale();
+        }
+
+        private void UpdateTimeScale()
+        {
+            Time.timeScale = timeScale;
             Time.fixedDeltaTime = initialFixedDeltaTime * Time.timeScale;
         }
     }
