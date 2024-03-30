@@ -270,15 +270,16 @@ MonoBehaviour:
   rb: {fileID: 5267483387649177716}
   currentHealth: 5
   maxHealth: 5
+  maxTimeSpentMoving: 8
+  moveCooldown: 0.25
   state: 0
   targetPosition: {fileID: 5267483388230834494}
   targetFlashlightPosition: {fileID: 5267483388281553409}
   flashlight: {fileID: 5267483388571425137}
-  timeWaited: 0
   movementSpeed: 2
   rotationSpeed: 90
-  turnWaitTime: 1
-  maxTurnTime: 10
+  timeSpentWaiting: 0
+  timeSpentMoving: 0
 --- !u!50 &5267483387649177716
 Rigidbody2D:
   serializedVersion: 4
@@ -721,11 +722,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3972943793593293139, guid: 00ae830399782a24696aaf2d3d6e93e5, type: 3}
       propertyPath: m_PointLightInnerAngle
-      value: 20
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 3972943793593293139, guid: 00ae830399782a24696aaf2d3d6e93e5, type: 3}
       propertyPath: m_PointLightOuterAngle
-      value: 50
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 3972943793593293139, guid: 00ae830399782a24696aaf2d3d6e93e5, type: 3}
       propertyPath: m_PointLightOuterRadius
