@@ -12,12 +12,6 @@ public class Sync2DTo3D : MonoBehaviour
     private Transform syncedTransform;
     private Transform trackedTransform2D;
     private string originalName;
-    
-    private void Start()
-    {
-        originalName = syncedTransform.name;
-        syncedTransform.SetParent(world3D.transform);
-    }
 
     public void StartTrackingTransform2D(Transform transformToTrack)
     {
