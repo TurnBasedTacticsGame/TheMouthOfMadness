@@ -9,14 +9,17 @@ namespace Source.GameEvents
     {
         [Inject] public List<EventHandler> EventHandlers { get; } = new();
 
-        public List<GameEvent> Stack { get; } = new();
+        public List<GameEventNode> Stack { get; } = new();
         public int CurrentEventIndex => Stack.Count - 1;
+        public GameEventNode CurrentEvent => Stack[CurrentEventIndex];
 
         public async UniTask RaiseEvent(GameEvent gameEvent)
         {
-            Stack.Add(gameEvent);
+            var node = new GameEventNode(gameEvent);
+            Stack.Add(node);
             {
                 await OnEventRaised(gameEvent);
+                node.Lock();
                 await OnEventConfirmed(gameEvent);
                 await gameEvent.Apply(this);
                 await OnEventApplied(gameEvent);
