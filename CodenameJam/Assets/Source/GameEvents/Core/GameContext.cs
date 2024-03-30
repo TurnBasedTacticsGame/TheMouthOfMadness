@@ -1,7 +1,7 @@
 using UniDi;
 using UnityEngine;
 
-namespace Source.GameEvents
+namespace Source.GameEvents.Core
 {
     public class GameContext : MonoBehaviour
     {

@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 using UniDi;
 using UnityEngine;
 
-namespace Source.GameEvents
+namespace Source.GameEvents.Core
 {
     public class EventTracker : MonoBehaviour
     {

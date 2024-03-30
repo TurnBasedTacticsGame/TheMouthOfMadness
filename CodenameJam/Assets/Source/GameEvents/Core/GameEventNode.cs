@@ -1,6 +1,6 @@
 using System;
 
-namespace Source.GameEvents
+namespace Source.GameEvents.Core
 {
     public class GameEventNode
     {

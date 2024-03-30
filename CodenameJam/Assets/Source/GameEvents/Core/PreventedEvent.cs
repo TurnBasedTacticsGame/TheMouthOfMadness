@@ -1,4 +1,4 @@
-namespace Source.GameEvents
+namespace Source.GameEvents.Core
 {
     /// <summary>
     /// Null object used to replace an event that was prevented.
