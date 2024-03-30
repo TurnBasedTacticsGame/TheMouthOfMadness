@@ -11,13 +11,20 @@ namespace Source.Enemies
 {
     public class Enemy : MonoBehaviour
     {
+        private enum EnemyState
+        {
+            Idle,
+            MovingToPlayer,
+        }
+
         [Header("Dependencies")]
         [SerializeField] private Rigidbody2D rb;
         [SerializeField] private AudioSource hissAudio;
 
         [SerializeField] private float damage = 1;
         [SerializeField] private float movementSpeed = 1;
-        [SerializeField] private float alertRange = 10;
+        [SerializeField] private float aggroRange = 10;
+        [SerializeField] private float deaggroRange = 15;
         [SerializeField] private float maxPathRange = 20;
 
         [Inject] private Player player;
@@ -26,28 +33,54 @@ namespace Source.Enemies
         private NavMeshPath path;
 
         private float pathFindCooldown = 0.5f;
-        private float pathFindTimer;
+        private float updateTimer;
 
-        private bool isAlerted = false;
+        private EnemyState state;
+        private Vector3 initialPosition;
 
         private void Start()
         {
             path = new NavMeshPath();
-            pathFindTimer = Random.Range(0, 0.5f);
+            updateTimer = Random.Range(0, 0.5f);
+            initialPosition = transform.position;
         }
 
         private void Update()
         {
-            pathFindTimer += Time.deltaTime;
-            if (pathFindTimer > pathFindCooldown)
+            switch (state)
             {
-                var destination = player.transform.position;
-                TryFindPath(destination);
+                case EnemyState.Idle:
+                {
+                    var playerDistance = (player.transform.position - transform.position).magnitude;
+                    if (playerDistance < aggroRange)
+                    {
+                        SlowUpdatePath(player.transform.position);
+                        if (path.status != NavMeshPathStatus.PathInvalid)
+                        {
+                            hissAudio.Play();
+                            state = EnemyState.MovingToPlayer;
+                        }
+                    }
+                    else
+                    {
+                        SlowUpdatePath(initialPosition);
+                    }
 
-                pathFindTimer = 0;
+                    break;
+                }
+                case EnemyState.MovingToPlayer:
+                {
+                    SlowUpdatePath(player.transform.position);
+                    if (GetPathLength() > maxPathRange)
+                    {
+                        state = EnemyState.Idle;
+                    }
+
+                    break;
+                }
             }
 
-            // Move
+            // Always move
             if (waypoints.Count > 0)
             {
                 var direction = waypoints[0] - transform.position;
@@ -63,12 +96,29 @@ namespace Source.Enemies
             }
         }
 
-        private void UpdateIsAlerted()
+        private float GetPathLength()
         {
+            var result = 0f;
+            for (var i = 1; i < waypoints.Count; i++)
+            {
+                result += (waypoints[i - 1] - waypoints[i]).magnitude;
+            }
 
+            return result;
         }
 
-        private bool TryFindPath(Vector3 destination)
+        private void SlowUpdatePath(Vector3 destination)
+        {
+            updateTimer += Time.deltaTime;
+            if (updateTimer > pathFindCooldown)
+            {
+                FindPath(destination);
+
+                updateTimer = 0;
+            }
+        }
+
+        private void FindPath(Vector3 destination)
         {
             var filter = new NavMeshQueryFilter();
             filter.areaMask |= 1 << 0;
@@ -81,11 +131,7 @@ namespace Source.Enemies
                 {
                     waypoints.Add(path.corners[i]);
                 }
-
-                return true;
             }
-
-            return false;
         }
     }
 }

@@ -202,8 +202,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1549186556070145092}
+  hissAudio: {fileID: 6280042361846424546}
   damage: 1
-  movementSpeed: 1
+  movementSpeed: 0.5
+  aggroRange: 10
+  deaggroRange: 15
+  maxPathRange: 20
 --- !u!1001 &404442576216791660
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -272,5 +276,10 @@ PrefabInstance:
 --- !u!4 &6280042361770395066 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5961621452821684182, guid: d4a38aedc590eac42a32785acf2bc30c, type: 3}
+  m_PrefabInstance: {fileID: 404442576216791660}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &6280042361846424546 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5961621452996278670, guid: d4a38aedc590eac42a32785acf2bc30c, type: 3}
   m_PrefabInstance: {fileID: 404442576216791660}
   m_PrefabAsset: {fileID: 0}
