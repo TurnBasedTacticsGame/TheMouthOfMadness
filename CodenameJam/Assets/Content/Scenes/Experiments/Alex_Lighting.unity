@@ -245,6 +245,8 @@ GameObject:
   - component: {fileID: 90164068}
   - component: {fileID: 90164069}
   - component: {fileID: 90164070}
+  - component: {fileID: 90164073}
+  - component: {fileID: 90164072}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -335,6 +337,33 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &90164072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90164067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74fe2a7ca29d4184da3ab82e8bb23a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  virtualAudioSourcePrefab: {fileID: 2750445587405018554, guid: d4a38aedc590eac42a32785acf2bc30c, type: 3}
+--- !u!114 &90164073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90164067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc8598865379fb34fb85513c02cb2847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: 1c670ecd298460a4bbedf03c5ba67195, type: 3}
+  virtualAudioSource: {fileID: 90164072}
 --- !u!1 &333483468
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,6 +374,7 @@ GameObject:
   m_Component:
   - component: {fileID: 333483469}
   - component: {fileID: 333483470}
+  - component: {fileID: 333483471}
   m_Layer: 0
   m_Name: World3D
   m_TagString: Untagged
@@ -385,7 +415,25 @@ MonoBehaviour:
   cubePrefab: {fileID: 7420453984945488346, guid: b722d43a5b9017049b4405025936df9c, type: 3}
   defaultMeshMaterial: {fileID: 2100000, guid: 5ac8bce1940d7044da835186c0eb6ca1, type: 2}
   showMeshes: 1
---- !u!1 &853412499
+--- !u!114 &333483471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333483468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89901fa14ca434ce89025b2d46aaf893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 333483470}
+  _identifier: 
+  _useSceneContext: 0
+  _context: {fileID: 0}
+  _bindType: 0
+--- !u!1 &731901117
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -393,29 +441,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 853412500}
+  - component: {fileID: 731901118}
+  - component: {fileID: 731901119}
   m_Layer: 0
-  m_Name: AudioSource
+  m_Name: 3DAudioListener
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &853412500
+--- !u!4 &731901118
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 853412499}
+  m_GameObject: {fileID: 731901117}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.8791075, y: 0.38982058, z: 0.66350204}
+  m_LocalPosition: {x: -1.8972898, y: -0.77, z: 0.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &731901119
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 731901117}
+  m_Enabled: 1
 --- !u!1 &1066233091
 GameObject:
   m_ObjectHideFlags: 0

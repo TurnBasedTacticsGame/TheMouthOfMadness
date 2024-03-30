@@ -98,7 +98,7 @@ namespace Source.Convert2DTo3D
                 }
             }
             
-            //transform.Rotate(new Vector3(-90, 0, 0), Space.Self);
+            transform.Rotate(new Vector3(-90, 0, 0), Space.Self);
         }
 
         private void OnDestroy()
