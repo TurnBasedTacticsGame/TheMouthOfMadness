@@ -11,6 +11,9 @@ namespace Source.Convert2DTo3D
         [SerializeField] private Collider cubePrefab;
         [SerializeField] private Material defaultMeshMaterial;
 
+        [Header("Configuration")] 
+        [SerializeField] private bool showMeshes = true;
+        
         private List<Mesh> meshes = new();
 
         // Start is called before the first frame update
@@ -28,6 +31,10 @@ namespace Source.Convert2DTo3D
                         cylinder.transform.Rotate(new Vector3(90, 0, 0), Space.Self);
 
                         cylinder.transform.SetParent(transform);
+                        if (cylinder.TryGetComponent<MeshRenderer>(out var meshRenderer))
+                        {
+                            meshRenderer.enabled = showMeshes;
+                        }
 
                         break;
                     }
@@ -38,7 +45,10 @@ namespace Source.Convert2DTo3D
                         cube.transform.Rotate(new Vector3(90, 0, 0), Space.Self);
 
                         cube.transform.SetParent(transform);
-
+                        if (cube.TryGetComponent<MeshRenderer>(out var meshRenderer))
+                        {
+                            meshRenderer.enabled = showMeshes;
+                        }
                         break;
                     }
                     case PolygonCollider2D polygonCollider:
@@ -75,6 +85,10 @@ namespace Source.Convert2DTo3D
 
                         var meshRenderer = meshObject.AddComponent<MeshRenderer>();
                         meshRenderer.sharedMaterial = defaultMeshMaterial;
+                        meshRenderer.enabled = showMeshes;
+
+                        var meshCollider = meshObject.AddComponent<MeshCollider>();
+                        meshCollider.sharedMesh = mesh;
 
                         meshObject.transform.position = collider.transform.position;
                         meshObject.transform.SetParent(transform);
@@ -83,6 +97,8 @@ namespace Source.Convert2DTo3D
                     }
                 }
             }
+            
+            //transform.Rotate(new Vector3(-90, 0, 0), Space.Self);
         }
 
         private void OnDestroy()
