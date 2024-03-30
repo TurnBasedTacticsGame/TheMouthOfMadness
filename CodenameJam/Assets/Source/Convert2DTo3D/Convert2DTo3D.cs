@@ -94,22 +94,21 @@ namespace Source.Convert2DTo3D
                         var meshCollider = meshObject.AddComponent<MeshCollider>();
                         meshCollider.sharedMesh = mesh;
 
-                        meshObject.transform.position = collider.transform.position;
-
                         break;
                     }
                 }
 
                 if (meshObject)
                 {
-                    meshObject.transform.SetParent(transform);
+                    meshObject.transform.SetParent(transform, false);
+                    meshObject.transform.localPosition = collider.transform.position;
                     meshObject.transform.localScale = collider.gameObject.transform.lossyScale;
+                    meshObject.isStatic = true;
+
                     if (meshObject.TryGetComponent<MeshRenderer>(out var meshRenderer))
                     {
                         meshRenderer.enabled = showMeshes;
                     }
-
-                    meshObject.isStatic = true;
 
                     meshObjects.Add(meshObject);
                 }
