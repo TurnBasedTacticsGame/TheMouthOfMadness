@@ -5,15 +5,16 @@ using UnityEngine;
 
 public class VirtualAudioListener : MonoBehaviour
 {
-    public Synced3DListener Synced3DListener { get; private set; }
+    public AudioListener Synced3DListener { get; private set; }
 
-    [SerializeField] private Synced3DListener virtualAudioListenerPrefab;
+    [SerializeField] private AudioListener audioListener;
 
     [Inject] private IInstantiator instantiator;
 
     private void Start()
     {
-        Synced3DListener = instantiator.InstantiatePrefabForComponent<Synced3DListener>(virtualAudioListenerPrefab, transform);
-        Synced3DListener.SetupAndTrack(transform);
+        var sync = instantiator.InstantiateComponent<Sync2DTo3D>(audioListener.gameObject);
+        sync.SetSyncedTransform(sync.transform);
+        sync.StartTrackingTransform2D(transform);
     }
 }

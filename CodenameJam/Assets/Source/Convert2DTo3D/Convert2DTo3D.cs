@@ -13,8 +13,8 @@ namespace Source.Convert2DTo3D
         [Header("Configuration")] 
         [SerializeField] private bool showMeshes = true;
 
-        private List<GameObject> meshObjects = new();
-        private List<Mesh> meshes = new();
+        [SerializeField] private List<GameObject> meshObjects = new();
+        [SerializeField] private List<Mesh> meshes = new();
 
         [ContextMenu("Generate new mesh colliders")]
         private void GenerateNewMeshColliders()
