@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Content/Scenes/Experiments/Lighting.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Content/Scenes/Shared.unity
+    guid: 1b594304a8044624bbeeb4b4f74c0209
   m_configObjects: {}
