@@ -59,7 +59,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 169e21ecc0c1ec640a591ff898940a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncedTransform: {fileID: 5961621452996278665}
 --- !u!1 &5961621452996278664
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,7 +111,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.1
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
