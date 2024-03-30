@@ -44,6 +44,11 @@ namespace Source.Players
             {
                 case PlayerState.Waiting:
                 {
+                    if (Time.timeScale > 0.1f)
+                    {
+                        break;
+                    }
+
                     if (Input.GetKeyDown(KeyCode.Mouse0))
                     {
                         var mousePosition = GetMouseWorldPosition();
