@@ -228,7 +228,7 @@ MonoBehaviour:
   transmissionLow: 1
   transmissionMid: 1
   transmissionHigh: 1
-  maxTransmissionSurfaces: 1
+  maxTransmissionSurfaces: 3
   directMixLevel: 1
   reflections: 1
   reflectionsType: 0
