@@ -1,5 +1,5 @@
 using Cinemachine;
-using Source.Players;
+using Source.GameEvents.Core;
 using UniDi;
 using UnityEngine;
 
@@ -13,13 +13,13 @@ namespace Source.UserInterface
         public float simulationZoom = 10;
         public float smoothTime = 0.5f;
 
-        [Inject] private Player player;
+        [Inject] private GameContext gameContext;
 
         private float currentZoomVelocity;
 
         private void Update()
         {
-            var targetZoom = player.state == Player.PlayerState.Moving ? simulationZoom : pausedZoom;
+            var targetZoom = gameContext.IsPaused ? pausedZoom : simulationZoom;
             virtualCamera.m_Lens.OrthographicSize = Mathf.SmoothDamp(virtualCamera.m_Lens.OrthographicSize, targetZoom, ref currentZoomVelocity, smoothTime, float.PositiveInfinity, Time.unscaledDeltaTime);
         }
     }
