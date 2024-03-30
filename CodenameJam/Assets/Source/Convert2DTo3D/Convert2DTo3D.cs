@@ -20,6 +20,11 @@ namespace Source.Convert2DTo3D
         {
             foreach (var collider in FindObjectsOfType<Collider2D>())
             {
+                if (!collider.gameObject.isStatic || collider.isTrigger)
+                {
+                    continue;
+                }
+                
                 switch (collider)
                 {
                     case CircleCollider2D circleCollider:
