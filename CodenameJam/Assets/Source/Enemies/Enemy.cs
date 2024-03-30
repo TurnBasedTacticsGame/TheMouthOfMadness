@@ -65,7 +65,7 @@ namespace Source.Enemies
 
         private void UpdateIsAlerted()
         {
-            
+
         }
 
         private bool TryFindPath(Vector3 destination)
