@@ -17,8 +17,7 @@ MonoBehaviour:
   perspectiveCorrectionFactor: 1
   hrtfVolumeGainDB: 0
   hrtfNormalizationType: 0
-  SOFAFiles:
-  - {fileID: -2616923580456698843, guid: c8b5a9dbce2ef5746bf2ba6e5449a152, type: 3}
+  SOFAFiles: []
   defaultMaterial: {fileID: 11400000, guid: 2a011bab5de11df4c81c68931509f73a, type: 2}
   sceneType: 1
   layerMask:
