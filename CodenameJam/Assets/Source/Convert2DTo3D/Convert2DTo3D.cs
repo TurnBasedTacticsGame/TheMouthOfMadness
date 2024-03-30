@@ -108,7 +108,9 @@ namespace Source.Convert2DTo3D
                     {
                         meshRenderer.enabled = showMeshes;
                     }
-                    
+
+                    meshObject.isStatic = true;
+
                     meshObjects.Add(meshObject);
                 }
             }
