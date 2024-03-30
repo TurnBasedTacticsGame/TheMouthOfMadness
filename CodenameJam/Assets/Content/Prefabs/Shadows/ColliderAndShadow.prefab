@@ -12,12 +12,13 @@ GameObject:
   - component: {fileID: 149530352735077298}
   - component: {fileID: 149530352735077299}
   - component: {fileID: 149530352735077297}
+  - component: {fileID: 1326621360134177906}
   m_Layer: 0
   m_Name: ColliderAndShadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &149530352735077300
 Transform:
@@ -84,14 +85,14 @@ MonoBehaviour:
   m_SelfShadows: 1
   m_ApplyToSortingLayers: 778a961d00000000538d1444
   m_ShapePath:
-  - {x: 0, y: 1, z: 0}
-  - {x: -0.95105654, y: 0.30901697, z: 0}
-  - {x: -0.5877852, y: -0.80901706, z: 0}
-  - {x: 0.58778536, y: -0.80901694, z: 0}
-  - {x: 0.9510565, y: 0.30901712, z: 0}
+  - {x: -0.0035957098, y: 0.3132171, z: 0}
+  - {x: -0.14201927, y: 0.17237958, z: 0}
+  - {x: -0.08797985, y: -0.021554053, z: 0}
+  - {x: 0.09876716, y: -0.028745592, z: 0}
+  - {x: 0.15999782, y: 0.14361393, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: -369330
+  m_InstanceId: 105604
 --- !u!114 &149530352735077297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,3 +107,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   polygonCollider: {fileID: 149530352735077298}
   shadowCaster: {fileID: 149530352735077299}
+--- !u!114 &1326621360134177906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149530352735077301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
