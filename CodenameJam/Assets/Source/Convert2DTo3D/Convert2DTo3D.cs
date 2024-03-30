@@ -50,26 +50,43 @@ namespace Source.Convert2DTo3D
                     
                     var meshFilter = meshObject.AddComponent<MeshFilter>();
                     var mesh = polygonCollider2D.CreateMesh(false, false);
-                    
-                    var vertices = mesh.vertices.ToList();
 
+                    var meshData = new MeshData();
+                    meshData.Vertices = mesh.vertices.ToList();
+                    
                     // PolygonCollider is translated by a position already when converted to mesh, shortcut to translate back
-                    for (var i = 0; i < vertices.Count; i++)
+                    for (var i = 0; i < meshData.Vertices.Count; i++)
                     {
-                        vertices[i] -= collider.transform.position;
+                        meshData.Vertices[i] -= collider.transform.position;
+                    }
+
+                    for (var i = 0; i < mesh.vertices.Length; i++)
+                    {
+                        
                     }
                     
                     // Duplicate vertices, increase or decrease height of both, consider normals
-                    var originalVerticesCount = vertices.Count;
-                    for (var i = 0; i < originalVerticesCount; i++)
+                    var originalVertices = meshData.Vertices.Count;
+                    for (var i = 0; i < originalVertices; i++)
                     {
-                        var near = vertices[i] + new Vector3(0,0, -1);
-                        var far = vertices[i] + new Vector3(0,0, 1);
-
-                        vertices[i] = near;
-                        vertices.Add(far); // Add to end, where 0 -> n+1, 1, -> n+2, ... <- This is the key!
+                        var near1 = meshData.Vertices[i] + new Vector3(0,0, -1);
+                        var far1 = meshData.Vertices[i] + new Vector3(0,0, 1);
+                        
+                        var near2 = meshData.Vertices[i+1] + new Vector3(0,0, -1);
+                        var far2 = meshData.Vertices[i+1] + new Vector3(0,0, 1);
+                        
+                        var quad = new Quad
+                        {
+                            BottomLeft = near2,
+                            BottomRight = near1,
+                            TopLeft = far2,
+                            TopRight = far1
+                        };
+                        
+                        quad.Triangulate(meshData);
                     }
                     
+                    /*
                     var triangles = mesh.triangles.ToList();
                     var originalTrianglesCount = triangles.Count;
                     
@@ -86,21 +103,10 @@ namespace Source.Convert2DTo3D
                         triangles.Add(newIndex3);
                         triangles.Add(newIndex2);
                     }
-                    
-                    // Stitch the two faces together using triangles -> make box using 2 tris with current and next coord
-                    for (var i = 0; i < originalVerticesCount; i++)
-                    {
-                        triangles.Add(i);
-                        triangles.Add(i+1);
-                        triangles.Add(originalVerticesCount + i);
-                        
-                        triangles.Add(i+1);
-                        triangles.Add(originalVerticesCount + i);
-                        triangles.Add(originalVerticesCount + i - 1);
-                    }
+                    */
 
-                    mesh.SetVertices(vertices);
-                    mesh.SetTriangles(triangles, 0);
+                    mesh.SetVertices(meshData.Vertices);
+                    mesh.SetTriangles(meshData.Triangles, 0);
 
                     meshes.Add(mesh);
                     meshFilter.sharedMesh = mesh;
@@ -125,6 +131,58 @@ namespace Source.Convert2DTo3D
             for (var i = meshes.Count - 1; i > 0; i--)
             {
                 Destroy(meshes[i]);
+            }
+        }
+        
+        private class MeshData
+        {
+            public List<Vector3> Vertices = new();
+            public List<Vector3> Normals = new();
+            public List<Vector2> Uv = new();
+            public List<int> Triangles = new();
+        }
+
+        private struct Quad
+        {
+            public Vector3 BottomLeft;
+            public Vector3 TopLeft;
+            public Vector3 TopRight;
+            public Vector3 BottomRight;
+
+            public Vector2 UvOffset;
+            public Vector2 UvSize;
+
+            public void Triangulate(MeshData meshData)
+            {
+                var verticesStartIndex = meshData.Vertices.Count;
+
+                meshData.Vertices.Add(BottomLeft);
+                meshData.Uv.Add(UvOffset);
+
+                meshData.Vertices.Add(TopLeft);
+                meshData.Uv.Add(UvOffset + Vector2.up * UvSize.y);
+
+                meshData.Vertices.Add(TopRight);
+                meshData.Uv.Add(UvOffset + Vector2.right * UvSize.x + Vector2.up * UvSize.y);
+
+                meshData.Vertices.Add(BottomRight);
+                meshData.Uv.Add(UvOffset + Vector2.right * UvSize.x);
+
+                // Triangle 1
+                meshData.Triangles.Add(verticesStartIndex + 0);
+                meshData.Triangles.Add(verticesStartIndex + 1);
+                meshData.Triangles.Add(verticesStartIndex + 2);
+
+                // Triangle 2
+                meshData.Triangles.Add(verticesStartIndex + 2);
+                meshData.Triangles.Add(verticesStartIndex + 3);
+                meshData.Triangles.Add(verticesStartIndex + 0);
+
+                var normal = Vector3.Cross(TopRight - TopLeft, BottomLeft - TopLeft);
+                for (var i = 0; i < 4; i++)
+                {
+                    meshData.Normals.Add(normal);
+                }
             }
         }
     }
