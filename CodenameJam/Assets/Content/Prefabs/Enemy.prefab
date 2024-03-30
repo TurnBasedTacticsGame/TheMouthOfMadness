@@ -206,7 +206,7 @@ MonoBehaviour:
   damage: 1
   movementSpeed: 0.5
   aggroRange: 10
-  deaggroRange: 15
+  deaggroRange: 11
   maxPathRange: 20
 --- !u!1001 &404442576216791660
 PrefabInstance:
