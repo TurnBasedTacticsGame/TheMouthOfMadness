@@ -13,9 +13,12 @@ namespace Source.Enemies
     {
         [Header("Dependencies")]
         [SerializeField] private Rigidbody2D rb;
+        [SerializeField] private AudioSource hissAudio;
 
         [SerializeField] private float damage = 1;
         [SerializeField] private float movementSpeed = 1;
+        [SerializeField] private float alertRange = 10;
+        [SerializeField] private float maxPathRange = 20;
 
         [Inject] private Player player;
 
@@ -24,6 +27,8 @@ namespace Source.Enemies
 
         private float pathFindCooldown = 0.5f;
         private float pathFindTimer;
+
+        private bool isAlerted = false;
 
         private void Start()
         {
@@ -42,6 +47,7 @@ namespace Source.Enemies
                 pathFindTimer = 0;
             }
 
+            // Move
             if (waypoints.Count > 0)
             {
                 var direction = waypoints[0] - transform.position;
@@ -55,6 +61,11 @@ namespace Source.Enemies
                     waypoints.RemoveAt(0);
                 }
             }
+        }
+
+        private void UpdateIsAlerted()
+        {
+
         }
 
         private bool TryFindPath(Vector3 destination)
