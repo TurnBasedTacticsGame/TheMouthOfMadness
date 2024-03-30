@@ -1,7 +1,10 @@
+using System;
+using System.Collections.Generic;
 using Source.GameEvents.Core;
 using UniDi;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
 namespace Source.Player
@@ -26,6 +29,14 @@ namespace Source.Player
         public float turnWaitTime = 1;
         public float maxTurnTime = 10;
 
+        private List<Vector3> waypoints = new();
+        private NavMeshPath path;
+
+        private void Start()
+        {
+            path = new NavMeshPath();
+        }
+
         private void Update()
         {
             if (state == PlayerState.Waiting)
@@ -33,7 +44,10 @@ namespace Source.Player
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
                     var mousePosition = GetMouseWorldPosition();
-                    targetPosition.position = mousePosition;
+                    if (TryFindPath(mousePosition))
+                    {
+                        targetPosition.position = waypoints[waypoints.Count - 1];
+                    }
                 }
 
                 if (Input.GetKeyDown(KeyCode.Mouse1))
@@ -63,6 +77,30 @@ namespace Source.Player
                 rb.velocity = Vector3.ClampMagnitude(targetPosition.position - transform.position, 1) * movementSpeed;
                 flashlight.rotation = Quaternion.RotateTowards(flashlight.rotation, targetFlashlightRotation, rotationSpeed * Time.deltaTime);
             }
+        }
+
+        // private bool HasRemainingMovement()
+        // {
+        //
+        // }
+
+        private bool TryFindPath(Vector3 destination)
+        {
+            var filter = new NavMeshQueryFilter();
+            filter.areaMask |= 1 << 0;
+
+            if (NavMesh.CalculatePath(transform.position, destination, filter, path))
+            {
+                waypoints.Clear();
+                for (var i = 0; i < path.corners.Length; i++)
+                {
+                    waypoints.Add(path.corners[i]);
+                }
+
+                return true;
+            }
+
+            return false;
         }
 
         private float GetAngleDegrees(Vector3 offset)
