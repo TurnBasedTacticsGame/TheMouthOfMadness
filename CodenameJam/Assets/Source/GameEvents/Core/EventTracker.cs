@@ -25,6 +25,7 @@ namespace Source.GameEvents.Core
                 await OnEventApplied(gameEvent);
             }
             Stack.RemoveAt(CurrentEventIndex);
+            await OnEventFinished(gameEvent);
         }
         
         private async UniTask OnEventRaised(GameEvent gameEvent)
@@ -48,6 +49,14 @@ namespace Source.GameEvents.Core
             foreach (var eventHandler in EventHandlers)
             {
                 await eventHandler.OnEventApplied(this);
+            }
+        }
+
+        private async UniTask OnEventFinished(GameEvent gameEvent)
+        {
+            foreach (var eventHandler in EventHandlers)
+            {
+                await eventHandler.OnEventFinished(this);
             }
         }
     }

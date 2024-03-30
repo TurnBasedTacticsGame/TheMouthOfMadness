@@ -19,5 +19,10 @@ namespace Source.GameEvents.Core
         {
             return UniTask.CompletedTask;
         }
+
+        public virtual UniTask OnEventFinished(EventTracker tracker)
+        {
+            return UniTask.CompletedTask;
+        }
     }
 }
