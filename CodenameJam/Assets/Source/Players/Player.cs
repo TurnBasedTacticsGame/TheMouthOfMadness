@@ -3,7 +3,6 @@ using Source.GameEvents.Core;
 using UniDi;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 namespace Source.Players
 {
@@ -21,7 +20,7 @@ namespace Source.Players
         [Inject] private EventTracker tracker;
         [Inject] private Camera mainCamera;
 
-        public PlayerState state;
+        public PlayerState state = PlayerState.Moving;
 
         public Transform targetPosition;
         public Transform targetFlashlightPosition;
@@ -39,6 +38,7 @@ namespace Source.Players
         private void Start()
         {
             path = new NavMeshPath();
+            TryFindPath(targetPosition.position);
         }
 
         private void Update()

@@ -272,7 +272,7 @@ MonoBehaviour:
   maxHealth: 5
   maxTimeSpentMoving: 8
   moveCooldown: 0.25
-  state: 0
+  state: 1
   targetPosition: {fileID: 5267483388230834494}
   targetFlashlightPosition: {fileID: 5267483388281553409}
   flashlight: {fileID: 5267483388571425137}
@@ -412,6 +412,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5267483388230834494}
+  - component: {fileID: 2300934748934264793}
   m_Layer: 0
   m_Name: Player_TargetPosition
   m_TagString: Untagged
@@ -435,6 +436,18 @@ Transform:
   m_Father: {fileID: 5267483389198633794}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2300934748934264793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5267483388230834489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101ba59d542244be8f51a6264c60e928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5267483388281553408
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,6 +457,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5267483388281553409}
+  - component: {fileID: 6988511409014377697}
   m_Layer: 0
   m_Name: Player_TargetFlashlightPosition
   m_TagString: Untagged
@@ -467,6 +481,18 @@ Transform:
   m_Father: {fileID: 5267483389198633794}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6988511409014377697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5267483388281553408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101ba59d542244be8f51a6264c60e928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5267483388571425136
 GameObject:
   m_ObjectHideFlags: 0
