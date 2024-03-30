@@ -60,7 +60,7 @@ namespace Source.Player
                 }
 
                 // Todo Use pathfinding
-                rb.velocity = Vector3.ClampMagnitude(targetPosition.position - transform.position, 1) * movementSpeed;
+                rb.velocity = (targetPosition.position - transform.position).normalized * movementSpeed;
                 flashlight.rotation = Quaternion.RotateTowards(flashlight.rotation, targetFlashlightRotation, rotationSpeed * Time.deltaTime);
             }
         }
