@@ -79,7 +79,7 @@ namespace Source.Players
         {
             var targetFlashlightRotation = Quaternion.Euler(0, 0, GetAngleDegrees(targetFlashlightPosition.position - transform.position));
             var hasReachedTargetPosition = waypoints.Count == 0;
-            var hasReachedTargetRotation = Quaternion.Angle(targetFlashlightRotation, flashlight.rotation) < 0.01f;
+            var hasReachedTargetRotation = Quaternion.Angle(targetFlashlightRotation, flashlight.rotation) < 0.1f;
 
             if (state == PlayerState.Moving && hasReachedTargetPosition && hasReachedTargetRotation)
             {
@@ -95,7 +95,7 @@ namespace Source.Players
 
                 rb.velocity = Vector3.ClampMagnitude(direction, 1) * movementSpeed;
 
-                var hasReachedCurrentWaypoint = (waypoints[0] - transform.position).sqrMagnitude < 0.01f;
+                var hasReachedCurrentWaypoint = (waypoints[0] - transform.position).sqrMagnitude < 0.1f;
                 if (hasReachedCurrentWaypoint)
                 {
                     waypoints.RemoveAt(0);
