@@ -11,9 +11,6 @@ namespace Source.Convert2DTo3D
         [SerializeField] private Collider cubePrefab;
         [SerializeField] private Material defaultMeshMaterial;
 
-        [Header("Configuration")]
-        [SerializeField] private float colliderHeight = 1000;
-
         private List<Mesh> meshes = new();
 
         // Start is called before the first frame update
@@ -27,7 +24,7 @@ namespace Source.Convert2DTo3D
                     {
                         var cylinder = Instantiate(cylinderPrefab, collider.transform.position, Quaternion.identity);
                         var diameter = circleCollider.radius * 2;
-                        cylinder.transform.localScale = new Vector3(diameter, colliderHeight, diameter); // Cylinder has height 1 up, 1 down.
+                        cylinder.transform.localScale = new Vector3(diameter, 0.5f, diameter); // Cylinder has height 1 up, 1 down.
                         cylinder.transform.Rotate(new Vector3(90, 0, 0), Space.Self);
 
                         cylinder.transform.SetParent(transform);
@@ -37,7 +34,7 @@ namespace Source.Convert2DTo3D
                     case BoxCollider2D boxCollider:
                     {
                         var cube = Instantiate(cubePrefab, collider.transform.position, Quaternion.identity);
-                        cube.transform.localScale = new Vector3(boxCollider.size.x, colliderHeight * 2, boxCollider.size.y); // Cube has height 0.5 up, 0.5 down
+                        cube.transform.localScale = new Vector3(boxCollider.size.x, 1, boxCollider.size.y); // Cube has height 0.5 up, 0.5 down
                         cube.transform.Rotate(new Vector3(90, 0, 0), Space.Self);
 
                         cube.transform.SetParent(transform);
@@ -47,72 +44,39 @@ namespace Source.Convert2DTo3D
                     case PolygonCollider2D polygonCollider:
                     {
                         var meshObject = new GameObject("MeshCollider3D");
-
                         var meshFilter = meshObject.AddComponent<MeshFilter>();
-                        var mesh = polygonCollider.CreateMesh(false, false);
 
                         var meshData = new MeshData();
-                        meshData.Vertices = mesh.vertices.ToList();
 
-                        // PolygonCollider is translated by a position already when converted to mesh, shortcut to translate back
-                        for (var i = 0; i < meshData.Vertices.Count; i++)
+                        // Triangulate
                         {
-                            meshData.Vertices[i] -= collider.transform.position;
-                        }
-
-                        for (var i = 0; i < mesh.vertices.Length; i++) {}
-
-                        // Duplicate vertices, increase or decrease height of both, consider normals
-                        var originalVertices = meshData.Vertices.Count;
-                        for (var i = 0; i < originalVertices; i++)
-                        {
-                            var near1 = meshData.Vertices[i] + new Vector3(0, 0, -1);
-                            var far1 = meshData.Vertices[i] + new Vector3(0, 0, 1);
-
-                            var near2 = meshData.Vertices[i + 1] + new Vector3(0, 0, -1);
-                            var far2 = meshData.Vertices[i + 1] + new Vector3(0, 0, 1);
-
-                            var quad = new Quad
+                            for (var i = 0; i < polygonCollider.points.Length; i++)
                             {
-                                BottomLeft = near2,
-                                BottomRight = near1,
-                                TopLeft = far2,
-                                TopRight = far1,
-                            };
+                                var start = (Vector3)polygonCollider.points[i];
+                                var end = (Vector3)polygonCollider.points[(i + 1) % polygonCollider.points.Length];
 
-                            quad.Triangulate(meshData);
+                                var quad = new Quad
+                                {
+                                    TopLeft = end + Vector3.forward * 0.5f,
+                                    TopRight = start + Vector3.forward * 0.5f,
+                                    BottomLeft = end + Vector3.back * 0.5f,
+                                    BottomRight = start + Vector3.back * 0.5f,
+                                };
+
+                                quad.Triangulate(meshData);
+                                quad.Reverse();
+                                quad.Triangulate(meshData);
+                            }
                         }
 
-                        /*
-                        var triangles = mesh.triangles.ToList();
-                        var originalTrianglesCount = triangles.Count;
-
-                        // Make triangle for far end -> make boxes between all new vertices
-                        for (var i = 0; i < originalTrianglesCount; i+=3)
-                        {
-                            // Recreate original triangles but with new vertices (old + offset)
-                            var newIndex1 = triangles[i] + originalVerticesCount;
-                            var newIndex2 = triangles[i+1] + originalVerticesCount;
-                            var newIndex3 = triangles[i+2] + originalVerticesCount;
-
-                            // Flip indices to flip implicit normals (faces in opposite direction -> triangle indices reverse clock rotation)
-                            triangles.Add(newIndex1);
-                            triangles.Add(newIndex3);
-                            triangles.Add(newIndex2);
-                        }
-                        */
-
-                        mesh.SetVertices(meshData.Vertices);
-                        mesh.SetTriangles(meshData.Triangles, 0);
-
-                        meshes.Add(mesh);
+                        var mesh = meshData.ToMesh();
                         meshFilter.sharedMesh = mesh;
+                        meshes.Add(mesh);
 
                         var meshRenderer = meshObject.AddComponent<MeshRenderer>();
                         meshRenderer.sharedMaterial = defaultMeshMaterial;
 
                         meshObject.transform.position = collider.transform.position;
-                        meshObject.transform.Rotate(new Vector3(90, 0, 0), Space.Self);
                         meshObject.transform.SetParent(transform);
 
                         break;
@@ -132,10 +96,21 @@ namespace Source.Convert2DTo3D
 
         private class MeshData
         {
-            public List<Vector3> Vertices = new();
-            public List<Vector3> Normals = new();
-            public List<Vector2> Uv = new();
-            public List<int> Triangles = new();
+            public List<Vector3> Vertices { get; } = new();
+            public List<Vector3> Normals { get; } = new();
+            public List<Vector2> Uv { get; } = new();
+            public List<int> Triangles { get; } = new();
+
+            public Mesh ToMesh()
+            {
+                return new Mesh
+                {
+                    vertices = Vertices.ToArray(),
+                    normals = Normals.ToArray(),
+                    triangles = Triangles.ToArray(),
+                    uv = Uv.ToArray(),
+                };
+            }
         }
 
         private struct Quad
@@ -179,6 +154,17 @@ namespace Source.Convert2DTo3D
                 {
                     meshData.Normals.Add(normal);
                 }
+            }
+
+            public void Reverse()
+            {
+                var temp = BottomLeft;
+                BottomLeft = BottomRight;
+                BottomRight = temp;
+
+                temp = TopLeft;
+                TopLeft = TopRight;
+                TopRight = temp;
             }
         }
     }
