@@ -50,9 +50,9 @@ namespace Source.Player
 
             if (state == PlayerState.Moving)
             {
-                var targetFlashlightRotation = Quaternion.LookRotation(targetFlashlightPosition.position - transform.position, Vector3.back);
-                var hasReachedTargetPosition = (targetPosition.position - transform.position).sqrMagnitude < 0.1f;
-                var hasReachedTargetRotation = Quaternion.Angle(targetFlashlightRotation, flashlight.rotation) < 0.1f;
+                var targetFlashlightRotation = Quaternion.Euler(0, 0, GetAngleDegrees(targetFlashlightPosition.position - transform.position));
+                var hasReachedTargetPosition = (targetPosition.position - transform.position).sqrMagnitude < 0.01f;
+                var hasReachedTargetRotation = Quaternion.Angle(targetFlashlightRotation, flashlight.rotation) < 0.01f;
 
                 if (hasReachedTargetPosition && hasReachedTargetRotation)
                 {
@@ -63,6 +63,11 @@ namespace Source.Player
                 rb.velocity = Vector3.ClampMagnitude(targetPosition.position - transform.position, 1) * movementSpeed;
                 flashlight.rotation = Quaternion.RotateTowards(flashlight.rotation, targetFlashlightRotation, rotationSpeed * Time.deltaTime);
             }
+        }
+
+        private float GetAngleDegrees(Vector3 offset)
+        {
+            return Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
         }
 
         private Vector3 GetMouseWorldPosition()
