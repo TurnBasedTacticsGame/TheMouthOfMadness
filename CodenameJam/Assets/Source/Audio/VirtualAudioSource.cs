@@ -14,8 +14,6 @@ public class VirtualAudioSource : MonoBehaviour
     private void Start()
     {
         Synced3DAudio = instantiator.InstantiatePrefabForComponent<Synced3DAudio>(virtualAudioSourcePrefab, transform);
-        
-        Synced3DAudio.Sync2DTo3D.transform.localPosition = Vector3.zero;
-        Synced3DAudio.Sync2DTo3D.StartTrackingTransform2D(transform);
+        Synced3DAudio.SetupAndTrack(transform);
     }
 }

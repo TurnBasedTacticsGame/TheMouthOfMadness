@@ -7,11 +7,9 @@ public class Sync2DTo3D : MonoBehaviour
 {
     public Transform TrackedTransform2D => trackedTransform2D;
 
-    [Header("Dependencies")] 
-    [SerializeField] private Transform syncedTransform;
-    
     [Inject] private Convert2DTo3D world3D;
-
+    
+    private Transform syncedTransform;
     private Transform trackedTransform2D;
     private string originalName;
     
@@ -25,6 +23,18 @@ public class Sync2DTo3D : MonoBehaviour
     {
         trackedTransform2D = transformToTrack;
         syncedTransform.name = originalName + "Synced3D-" + trackedTransform2D.name;
+    }
+
+    public void SetSyncedTransform(Transform transformToSync)
+    {
+        if (syncedTransform != null)
+        {
+            syncedTransform.name = originalName;
+        }
+        
+        syncedTransform = transformToSync;
+        originalName = syncedTransform.name;
+        syncedTransform.SetParent(world3D.transform);
     }
 
     private void Update()
