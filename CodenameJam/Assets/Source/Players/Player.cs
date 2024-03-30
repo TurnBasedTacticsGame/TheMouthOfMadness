@@ -1,18 +1,19 @@
-using System;
 using System.Collections.Generic;
 using Source.GameEvents.Core;
 using UniDi;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem;
 
-namespace Source.Player
+namespace Source.Players
 {
     public class Player : MonoBehaviour
     {
         [Header("Dependencies")]
         [SerializeField] private Rigidbody2D rb;
+
+        [Header("Configuration")]
+        [SerializeField] private float currentHealth = 5;
+        [SerializeField] private float maxHealth = 5;
 
         [Inject] private EventTracker tracker;
         [Inject] private Camera mainCamera;
