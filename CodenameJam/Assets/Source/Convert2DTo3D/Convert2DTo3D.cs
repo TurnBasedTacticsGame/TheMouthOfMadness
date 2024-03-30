@@ -24,40 +24,33 @@ namespace Source.Convert2DTo3D
                 {
                     continue;
                 }
-                
+
+                GameObject meshObject = null;
                 switch (collider)
                 {
                     case CircleCollider2D circleCollider:
                     {
                         var cylinder = Instantiate(cylinderPrefab, collider.transform.position, Quaternion.identity);
-                        var diameter = circleCollider.radius * 2;
-                        cylinder.transform.localScale = new Vector3(diameter, 0.5f, diameter); // Cylinder has height 1 up, 1 down.
-                        cylinder.transform.Rotate(new Vector3(90, 0, 0), Space.Self);
+                        meshObject = cylinder.gameObject;
 
-                        cylinder.transform.SetParent(transform);
-                        if (cylinder.TryGetComponent<MeshRenderer>(out var meshRenderer))
-                        {
-                            meshRenderer.enabled = showMeshes;
-                        }
+                        var diameter = circleCollider.radius * 2;
+                        meshObject.transform.localScale = new Vector3(diameter, 0.5f, diameter); // Cylinder has height 1 up, 1 down.
+                        meshObject.transform.Rotate(new Vector3(90, 0, 0), Space.Self);
 
                         break;
                     }
                     case BoxCollider2D boxCollider:
                     {
                         var cube = Instantiate(cubePrefab, collider.transform.position, Quaternion.identity);
-                        cube.transform.localScale = new Vector3(boxCollider.size.x, 1, boxCollider.size.y); // Cube has height 0.5 up, 0.5 down
-                        cube.transform.Rotate(new Vector3(90, 0, 0), Space.Self);
+                        meshObject = cube.gameObject;
 
-                        cube.transform.SetParent(transform);
-                        if (cube.TryGetComponent<MeshRenderer>(out var meshRenderer))
-                        {
-                            meshRenderer.enabled = showMeshes;
-                        }
+                        meshObject.transform.localScale = new Vector3(boxCollider.size.x, 1, boxCollider.size.y); // Cube has height 0.5 up, 0.5 down
+
                         break;
                     }
                     case PolygonCollider2D polygonCollider:
                     {
-                        var meshObject = new GameObject("MeshCollider3D");
+                        meshObject = new GameObject("MeshCollider3D");
                         var meshFilter = meshObject.AddComponent<MeshFilter>();
 
                         var meshData = new MeshData();
@@ -95,14 +88,21 @@ namespace Source.Convert2DTo3D
                         meshCollider.sharedMesh = mesh;
 
                         meshObject.transform.position = collider.transform.position;
-                        meshObject.transform.SetParent(transform);
 
                         break;
                     }
                 }
+
+                if (meshObject)
+                {
+                    meshObject.transform.SetParent(transform);
+                    meshObject.transform.localScale = collider.gameObject.transform.lossyScale;
+                    if (meshObject.TryGetComponent<MeshRenderer>(out var meshRenderer))
+                    {
+                        meshRenderer.enabled = showMeshes;
+                    }
+                }
             }
-            
-            transform.Rotate(new Vector3(-90, 0, 0), Space.Self);
         }
 
         private void OnDestroy()
