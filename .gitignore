@@ -17,3 +17,4 @@ Builds/
 # --- Git Subrepo ---
 
 .git-rewrite/
+Build/
