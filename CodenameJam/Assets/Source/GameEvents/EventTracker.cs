@@ -12,9 +12,40 @@ namespace Source.GameEvents
         public List<GameEvent> Stack { get; } = new();
         public int CurrentEventIndex => Stack.Count - 1;
 
-        public UniTask RaiseEvent(GameEvent gameEvent)
+        public async UniTask RaiseEvent(GameEvent gameEvent)
         {
-            return UniTask.CompletedTask;
+            Stack.Add(gameEvent);
+            {
+                await OnEventRaised(gameEvent);
+                await OnEventConfirmed(gameEvent);
+                await gameEvent.Apply(this);
+                await OnEventApplied(gameEvent);
+            }
+            Stack.RemoveAt(CurrentEventIndex);
+        }
+        
+        private async UniTask OnEventRaised(GameEvent gameEvent)
+        {
+            foreach (var eventHandler in EventHandlers)
+            {
+                await eventHandler.OnEventRaised(this);
+            }
+        }
+
+        private async UniTask OnEventConfirmed(GameEvent gameEvent)
+        {
+            foreach (var eventHandler in EventHandlers)
+            {
+                await eventHandler.OnEventConfirmed(this);
+            }
+        }
+
+        private async UniTask OnEventApplied(GameEvent gameEvent)
+        {
+            foreach (var eventHandler in EventHandlers)
+            {
+                await eventHandler.OnEventApplied(this);
+            }
         }
     }
 }
