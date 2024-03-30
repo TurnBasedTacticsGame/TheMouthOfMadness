@@ -241,7 +241,7 @@ MonoBehaviour:
   hybridReverbEQMid: 1
   hybridReverbEQHigh: 1
   hybridReverbDelay: 0
-  applyHRTFToReflections: 0
+  applyHRTFToReflections: 1
   reflectionsMixLevel: 1
   pathing: 0
   pathingProbeBatch: {fileID: 0}
