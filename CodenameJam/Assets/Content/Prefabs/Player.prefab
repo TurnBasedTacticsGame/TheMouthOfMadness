@@ -210,6 +210,7 @@ GameObject:
   - component: {fileID: 5267483387649177713}
   - component: {fileID: 5267483387649177717}
   - component: {fileID: 5267483387649177716}
+  - component: {fileID: 6664269791353730848}
   m_Layer: 0
   m_Name: Player_Character
   m_TagString: Untagged
@@ -250,6 +251,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 5267483387649177716}
+  currentHealth: 5
+  maxHealth: 5
   state: 0
   targetPosition: {fileID: 5267483388230834494}
   targetFlashlightPosition: {fileID: 5267483388281553409}
@@ -280,6 +283,24 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &6664269791353730848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5267483387649177712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89901fa14ca434ce89025b2d46aaf893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 5267483387649177717}
+  _identifier: 
+  _useSceneContext: 0
+  _context: {fileID: 0}
+  _bindType: 0
 --- !u!1 &5267483387923587484
 GameObject:
   m_ObjectHideFlags: 0
