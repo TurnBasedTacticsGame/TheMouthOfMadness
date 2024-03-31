@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UniDi;
 using UnityEngine;
 
 public class PickupLogUI : MonoBehaviour
@@ -11,12 +12,10 @@ public class PickupLogUI : MonoBehaviour
     [Header("Dependencies")]
     [SerializeField] private TextMeshProUGUI textUi;
     [SerializeField] private Animator animator;
-    [SerializeField] private RandomAudioPlayer randomAudioPlayer;
     [SerializeField] private TextWriter textWriter;
 
     private TextData currentLogData;
     private static readonly int Opened = Animator.StringToHash("Opened");
-
 
     private void OnEnable()
     {
@@ -62,6 +61,5 @@ public class PickupLogUI : MonoBehaviour
     private void WriteToUi(string characters)
     {
         textUi.text += characters;
-        randomAudioPlayer.PlayRandomOnce();
     }
 }

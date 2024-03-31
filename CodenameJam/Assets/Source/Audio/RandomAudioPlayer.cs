@@ -1,20 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using UniDi;
 using UnityEngine;
 
 public class RandomAudioPlayer : MonoBehaviour
 {
-    [Header("Dependencies")]
-    [SerializeField] private AudioSource audioSource;
+    [Inject] private AudioSource playerAudioSource;
     
-    [Header("Configuration")]
-    [SerializeField] private List<AudioClip> clips;
-
-    public void PlayRandomOnce()
+    public void PlayRandomOnce(AudioClipData data)
     {
-        if (clips.Count == 0) return;
+        if (data.AudioClips.Length == 0) return;
         
-        var index = Random.Range(0, clips.Count);
-        audioSource.clip = clips[index];
+        var index = Random.Range(0, data.AudioClips.Length);
+        playerAudioSource.clip = data.AudioClips[index];
+        playerAudioSource.Play();
     }
 }
