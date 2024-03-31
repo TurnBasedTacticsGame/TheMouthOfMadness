@@ -85,7 +85,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5961621452996278664}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.5, y: 6.38, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -113,7 +113,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 1000
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -148,7 +148,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.9
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -201,9 +201,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directBinaural: 1
-  interpolation: 0
+  interpolation: 1
   perspectiveCorrection: 0
-  distanceAttenuation: 0
+  distanceAttenuation: 1
   distanceAttenuationInput: 1
   distanceAttenuationValue: 1
   airAbsorption: 1
@@ -222,7 +222,7 @@ MonoBehaviour:
   occlusionRadius: 1
   occlusionSamples: 16
   occlusionValue: 1
-  transmission: 0
+  transmission: 1
   transmissionType: 0
   transmissionInput: 0
   transmissionLow: 1
@@ -242,8 +242,8 @@ MonoBehaviour:
   hybridReverbEQHigh: 1
   hybridReverbDelay: 0
   applyHRTFToReflections: 1
-  reflectionsMixLevel: 1
-  pathing: 0
+  reflectionsMixLevel: 0.2
+  pathing: 1
   pathingProbeBatch: {fileID: 0}
   pathValidation: 1
   findAlternatePaths: 1
@@ -268,5 +268,5 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  applyHRTFToPathing: 0
+  applyHRTFToPathing: 1
   pathingMixLevel: 1
