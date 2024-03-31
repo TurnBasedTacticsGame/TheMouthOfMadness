@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57527e263b6b512489cfe5bb2feeac09, type: 3}
+  m_Name: Hissing_AudioClips
+  m_EditorClassIdentifier: 
+  audioClips:
+  - {fileID: 8300000, guid: ee7b05d604a91c645b8e9183cbe0a537, type: 3}
+  - {fileID: 8300000, guid: e3d2091188b5e7648b7aea7ce6d9addf, type: 3}
+  - {fileID: 8300000, guid: 36f5787375b19c94ab4d64bbb4fb60ef, type: 3}
+  - {fileID: 8300000, guid: fc120cbe28ce9de489434d3a3a8c8c36, type: 3}
+  - {fileID: 8300000, guid: 9a47fdf0b82f9984caf84296070fbf64, type: 3}
+  - {fileID: 8300000, guid: 77f77df948b3e5d4a9a337813b0a8fdd, type: 3}
+  averageTimePerClip: 0.8
