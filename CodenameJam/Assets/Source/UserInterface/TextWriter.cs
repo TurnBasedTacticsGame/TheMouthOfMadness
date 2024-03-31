@@ -6,6 +6,9 @@ using UnityEngine;
 // This is a very roundabout implementation, but it works!
 public class TextWriter : MonoBehaviour
 {
+    [Header("Dependencies")]
+    [SerializeField] private RandomAudioPlayer randomAudioPlayer;
+    
     public event Action<string> OnWriteCharacter;
     
     private TextData textData;
@@ -28,6 +31,11 @@ public class TextWriter : MonoBehaviour
             if (TryGetNextString(out var character))
             {
                 OnWriteCharacter?.Invoke(character);
+                // Hacky
+                if (character.Length == 1)
+                {
+                    randomAudioPlayer.PlayRandomOnce(textData.TextGroups[currentTextGroupIndex].audioClipData);
+                }
                 nextCharacterTimer = textData.TextGroups[currentTextGroupIndex].timePerCharacter;
             }
             else

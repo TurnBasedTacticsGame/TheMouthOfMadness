@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textGroups:
   - text: Hello <i>hi</i>
-    timePerCharacter: 0.149
+    timePerCharacter: 0.7
+    audioClipData: {fileID: 11400000, guid: 6fff20efae3e99c4cb5a7c4c0bb177bf, type: 2}
   - text: '<br>
 
       Hello <i> hi </i>'
-    timePerCharacter: 0.155
+    timePerCharacter: 0.7
+    audioClipData: {fileID: 11400000, guid: 6fff20efae3e99c4cb5a7c4c0bb177bf, type: 2}

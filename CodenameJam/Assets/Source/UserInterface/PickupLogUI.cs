@@ -2,10 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UniDi;
 using UnityEngine;
 
 public class PickupLogUI : MonoBehaviour
 {
+    public event Action OnPickupTextClose; 
+
     [Header("Dependencies")]
     [SerializeField] private TextMeshProUGUI textUi;
     [SerializeField] private Animator animator;
@@ -13,7 +16,6 @@ public class PickupLogUI : MonoBehaviour
 
     private TextData currentLogData;
     private static readonly int Opened = Animator.StringToHash("Opened");
-
 
     private void OnEnable()
     {
@@ -51,6 +53,7 @@ public class PickupLogUI : MonoBehaviour
     public void Close()
     {
         textWriter.StopWriting();
+        OnPickupTextClose?.Invoke();
         gameObject.SetActive(false);
         textUi.gameObject.SetActive(false);
     }

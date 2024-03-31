@@ -17,5 +17,6 @@ public class TextData : ScriptableObject
         public string text;
         [Range(0.1f, 1f)]
         public float timePerCharacter;
+        public AudioClipData audioClipData;
     }
 }
