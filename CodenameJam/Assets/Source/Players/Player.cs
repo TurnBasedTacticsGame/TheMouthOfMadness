@@ -16,7 +16,8 @@ namespace Source.Players
         [SerializeField] private CameraShaker cameraShaker;
         [SerializeField] private RandomAudioPlayer footstepsRandomAudioPlayer;
         [SerializeField] private AudioClipData footstepAudioData;
-
+        [SerializeField] private Animator animator;
+        
         [Header("Configuration")]
         [SerializeField] private float currentHealth = 5;
         [SerializeField] private float maxHealth = 5;
@@ -53,7 +54,8 @@ namespace Source.Players
         
         private Vector3 arrowPositionVelocity;
         private Quaternion arrowRotationVelocity;
-        
+        private static readonly int Moving = Animator.StringToHash("Moving");
+
         private void Start()
         {
             path = new NavMeshPath();
@@ -66,6 +68,8 @@ namespace Source.Players
             {
                 case PlayerState.Waiting:
                 {
+                    animator.SetBool(Moving, false);
+                    
                     TimeSpentWaiting += Time.deltaTime;
                     TimeSpentMoving = 0;
 
@@ -134,14 +138,16 @@ namespace Source.Players
                         targetFlashlightDirectionArrow.IsTargeting(false);
                         foundPath = false;
                     }
-
+                    
                     break;
                 }
                 case PlayerState.Moving:
                 {
+                    animator.SetBool(Moving, true);
+                    
                     TimeSpentMoving += Time.deltaTime;
                     TimeSpentWaiting = 0;
-                    
+
                     footstepsRandomAudioPlayer.StartPlayingRandom(footstepAudioData);
 
                     if (TimeSpentMoving > maxTimeSpentMoving)

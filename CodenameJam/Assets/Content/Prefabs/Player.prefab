@@ -324,7 +324,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5267483387344116140}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.48, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -369,11 +369,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -512975343
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.18693995, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -396,6 +396,7 @@ GameObject:
   - component: {fileID: 3583402662056201544}
   - component: {fileID: 5267483387649177716}
   - component: {fileID: 6664269791353730848}
+  - component: {fileID: 2632980512157219897}
   m_Layer: 0
   m_Name: Player_Character
   m_TagString: Untagged
@@ -444,6 +445,7 @@ MonoBehaviour:
   cameraShaker: {fileID: 3583402662056201544}
   footstepsRandomAudioPlayer: {fileID: 0}
   footstepAudioData: {fileID: 11400000, guid: e81dc6d66836d18498377565c1fa902f, type: 2}
+  animator: {fileID: 2632980512157219897}
   currentHealth: 5
   maxHealth: 5
   maxTimeSpentMoving: 8
@@ -513,6 +515,26 @@ MonoBehaviour:
   _useSceneContext: 0
   _context: {fileID: 0}
   _bindType: 0
+--- !u!95 &2632980512157219897
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5267483387649177712}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bd00b48c10aa5f441aa0c1ed98c8b7c2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &5267483387923587484
 GameObject:
   m_ObjectHideFlags: 0
@@ -1443,6 +1465,14 @@ PrefabInstance:
       propertyPath: m_PointLightOuterRadius
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 3972943793593293139, guid: 00ae830399782a24696aaf2d3d6e93e5, type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3972943793593293139, guid: 00ae830399782a24696aaf2d3d6e93e5, type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.data[3]
+      value: -1700259675
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00ae830399782a24696aaf2d3d6e93e5, type: 3}
 --- !u!4 &9033316765643915196 stripped
@@ -1578,6 +1608,14 @@ PrefabInstance:
     - target: {fileID: 3972943793593293139, guid: 00ae830399782a24696aaf2d3d6e93e5, type: 3}
       propertyPath: m_PointLightOuterRadius
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3972943793593293139, guid: 00ae830399782a24696aaf2d3d6e93e5, type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3972943793593293139, guid: 00ae830399782a24696aaf2d3d6e93e5, type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.data[3]
+      value: -512975343
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00ae830399782a24696aaf2d3d6e93e5, type: 3}
