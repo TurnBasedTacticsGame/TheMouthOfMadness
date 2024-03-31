@@ -14,19 +14,18 @@ namespace Source.UserInterface
         [Inject] private PickupLogUI pickupLogUI;
 
         private float initialFixedDeltaTime;
-        private float timeScale = 0;
+        [SerializeField] private float timeScale = 0;
 
         private void Awake()
         {
             initialFixedDeltaTime = Time.fixedDeltaTime;
-
             UpdateTimeScale();
         }
 
         private void Update()
         {
-            var shouldPause = (player.state == Player.PlayerState.Waiting 
-                              && player.timeSpentWaiting > player.moveCooldown) 
+            var shouldPause = (player.State == Player.PlayerState.Waiting
+                              && player.TimeSpentWaiting > player.moveCooldown)
                               || pickupLogUI.PlayerIsReading;
 
             var targetTimeScale = shouldPause ? 0 : 1;

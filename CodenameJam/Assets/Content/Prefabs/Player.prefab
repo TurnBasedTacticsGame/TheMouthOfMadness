@@ -448,7 +448,7 @@ MonoBehaviour:
   maxHealth: 5
   maxTimeSpentMoving: 8
   moveCooldown: 0.25
-  state: 1
+  state: 0
   targetPosition: {fileID: 7193468440646185891}
   targetFlashlightPosition: {fileID: 7930734781320064920}
   targetFlashlightDirectionArrow: {fileID: 6410691722219571455}
