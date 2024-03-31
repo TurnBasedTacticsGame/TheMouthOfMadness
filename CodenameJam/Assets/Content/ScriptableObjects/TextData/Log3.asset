@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6951d071bc95c94399362e842b69c5b, type: 3}
+  m_Name: Log3
+  m_EditorClassIdentifier: 
+  textGroups:
+  - text: "I just wanted to spend an afternoon or something here but I\u2019ve been
+      down here for so long and I don\u2019t know what to do!! I want to go home
+      even though I know I\u2019m so getting grounded!! But I can\u2019t go up and
+      I don\u2019t know I\u2019m lost? And what\u2019s worse is like so I\u2019ve
+      been hearing these noises on and on and on and I thought its bats or rocks
+      or whatever but it was a lady but she didn\u2019t like--\r\n\r\nLook normal?
+      The walls move. Like a chest when it\u2019s like breathing but I don\u2019t
+      know. Maybe I\u2019m seeing things?"
+    timePerCharacter: 0.1
+    audioClipData: {fileID: 11400000, guid: 6fff20efae3e99c4cb5a7c4c0bb177bf, type: 2}

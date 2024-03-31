@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6951d071bc95c94399362e842b69c5b, type: 3}
+  m_Name: Log2
+  m_EditorClassIdentifier: 
+  textGroups:
+  - text: "This cave is deeper than I thought! It\u2019s stupid big, I\u2019ve been
+      walking for hours and there\u2019s no end in sight. Third biggest ain't right,
+      this is easily the biggest, maybe in this coast. At least it\u2019s easy walking...
+      Still, I start getting real munchsome because I didn\u2019t think I\u2019ll
+      be down here that long. So I start going back up.\r\n\r\nI\u2019m not saying
+      that I am lost but I\u2019m lost. I retraced my steps exactly, but I can\u2019t
+      find the exit. It seems the only way I can go is out maybe. I can tough it
+      out for a few more hours."
+    timePerCharacter: 0.1
+    audioClipData: {fileID: 11400000, guid: 6fff20efae3e99c4cb5a7c4c0bb177bf, type: 2}

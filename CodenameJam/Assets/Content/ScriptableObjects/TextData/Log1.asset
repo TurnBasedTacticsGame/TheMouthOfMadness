@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6951d071bc95c94399362e842b69c5b, type: 3}
+  m_Name: Log1
+  m_EditorClassIdentifier: 
+  textGroups:
+  - text: "I\u2019ve lived here all my life but I\u2019ve never gone inside of Mt.
+      Oris before, which is a damn shame because my land\u2019s right next to it.
+      It\u2019s got the third biggest cave system in the state, say some, but no
+      one\u2019s mapped it out because of how big and treacherous it is. Park Service
+      says its off limits, which is some overreaching bullshit. How is a dumb cave
+      supposed to kill me. \r\n\r\nI can hear something moaning and groaning down
+      the hall. Better not be those piece of shit stoner kids again.\r"
+    timePerCharacter: 0.1
+    audioClipData: {fileID: 11400000, guid: 6fff20efae3e99c4cb5a7c4c0bb177bf, type: 2}
