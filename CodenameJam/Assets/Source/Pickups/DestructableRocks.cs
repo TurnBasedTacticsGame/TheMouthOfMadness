@@ -25,6 +25,11 @@ public class DestructableRocks : MonoBehaviour
 
         pickupLogUI.OnPickupTextClose += TryCrackCompletely;
     }
+    
+    private void OnDisable()
+    {
+        pickupLogUI.OnPickupTextClose -= TryCrackCompletely;
+    }
 
     private void CrackFurther()
     {
