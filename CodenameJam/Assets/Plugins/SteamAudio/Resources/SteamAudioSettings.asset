@@ -28,7 +28,7 @@ MonoBehaviour:
   realTimeBounces: 4
   realTimeDuration: 1
   realTimeAmbisonicOrder: 1
-  realTimeMaxSources: 32
+  realTimeMaxSources: 128
   realTimeCPUCoresPercentage: 5
   realTimeIrradianceMinDistance: 1
   bakeConvolution: 1
