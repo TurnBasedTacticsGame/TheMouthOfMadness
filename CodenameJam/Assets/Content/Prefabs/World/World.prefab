@@ -379,11 +379,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1607629161873489234}
     m_Modifications:
+    - target: {fileID: 1250853775157574817, guid: 0b559185cd4482843b66d9918bf2a65d, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1363216981751749454, guid: 0b559185cd4482843b66d9918bf2a65d, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1542357409773089617, guid: 0b559185cd4482843b66d9918bf2a65d, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7657748917435772348, guid: 0b559185cd4482843b66d9918bf2a65d, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
