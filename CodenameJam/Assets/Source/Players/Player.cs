@@ -1,23 +1,28 @@
+using System;
 using System.Collections.Generic;
 using Cinemachine;
 using Source.GameEvents.Core;
 using UniDi;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
+using UnityEngine.Rendering.Universal;
 
 namespace Source.Players
 {
     public class Player : MonoBehaviour
     {
+        public event Action OnPlayerDeath; 
+
         [Header("Dependencies")]
         [SerializeField] private Rigidbody2D rb;
         [SerializeField] private CameraShaker cameraShaker;
         [SerializeField] private RandomAudioPlayer footstepsRandomAudioPlayer;
         [SerializeField] private AudioClipData footstepAudioData;
         [SerializeField] private Animator animator;
-        
-        [Header("Configuration")]
+        [SerializeField] private Light2D flashlightLight2D;
+
+        [Header("Configuration")] 
+        [SerializeField] private bool canTakeDamage = true;
         [SerializeField] private float currentHealth = 5;
         [SerializeField] private float maxHealth = 5;
         [SerializeField] private float maxTimeSpentMoving = 8f;
@@ -51,6 +56,8 @@ namespace Source.Players
         [SerializeField] private float rejectedPathShakeIntensity;
         [SerializeField] private float rejectedPathShakeDuration;
         
+        private float startingLightIntensity = -1;
+        private float startingLightFalloffIntensity = -1;
         private Vector3 arrowPositionVelocity;
         private Quaternion arrowRotationVelocity;
         private static readonly int Moving = Animator.StringToHash("Moving");
@@ -227,6 +234,26 @@ namespace Source.Players
             }
 
             return transform.position + Vector3.up;
+        }
+        
+        public void TakeDamage(float damage)
+        {
+            if (!canTakeDamage) 
+                return;
+            
+            currentHealth -= damage;
+            currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+            var healthPercentage = currentHealth / maxHealth;
+
+            var unset = startingLightIntensity < 0;
+            if (unset)
+            {
+                startingLightIntensity = flashlightLight2D.intensity;
+                startingLightFalloffIntensity = flashlightLight2D.falloffIntensity;
+            }
+
+            flashlightLight2D.intensity = Mathf.Lerp(0, startingLightIntensity, healthPercentage);
+            flashlightLight2D.falloffIntensity = Mathf.Lerp(startingLightIntensity, 1, healthPercentage);
         }
 
         public enum PlayerState
