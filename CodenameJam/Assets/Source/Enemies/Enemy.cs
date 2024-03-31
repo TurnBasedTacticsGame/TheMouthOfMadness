@@ -113,10 +113,13 @@ namespace Source.Enemies
             hissAudio.Play();
         }
 
-        private void OnTriggerEnter2D(Collider2D col)
+        private void OnCollisionEnter2D(Collision2D col)
         {
-            if (col.TryGetComponent<Player>(out var player))
+            Debug.Log("Enemy collided " + col.rigidbody);
+            
+            if (col.rigidbody != null && col.rigidbody.TryGetComponent<Player>(out var player))
             {
+                Debug.Log("Enemy collided with player");
                 player.TryTakeDamage(damage);
             }
         }
