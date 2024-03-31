@@ -16,7 +16,6 @@ namespace Source.Players
         [SerializeField] private float maxHealth = 5;
         [SerializeField] private float maxTimeSpentMoving = 8f;
         [SerializeField] public float moveCooldown = 0.25f;
-        [SerializeField] public float flashlightDirectionArrowDistance = 1f;
 
         [Inject] private EventTracker tracker;
         [Inject] private Camera mainCamera;
@@ -34,10 +33,15 @@ namespace Source.Players
         private List<Vector3> waypoints = new();
         private NavMeshPath path;
         private bool foundPath;
+        private Vector3 initialDirection;
 
         public float timeSpentWaiting;
         public float timeSpentMoving;
         
+        [Header("UI")]
+        [SerializeField] public float flashlightDirectionArrowDistance = 1f;
+        [SerializeField] float arrowRotationSmoothTime = 0.1f;
+        private Vector3 arrowVelocity;
 
         private void Start()
         {
@@ -66,23 +70,25 @@ namespace Source.Players
                         {
                             targetPosition.position = waypoints[waypoints.Count - 1];
                             foundPath = true;
+                            initialDirection = transform.up;
                         }
                     }
 
                     if (Input.GetKey(KeyCode.Mouse0) && foundPath)
                     {
                         var newPosition = targetPosition.position;
-                        var frontDirection = (GetMouseWorldPosition() - newPosition).normalized;
-                        var frontPosition = newPosition + (frontDirection * flashlightDirectionArrowDistance);
-                        targetFlashlightDirectionArrow.transform.position = frontPosition;
-                        targetFlashlightDirectionArrow.transform.up = frontDirection;
-                        targetFlashlightDirectionArrow.transform.right = Vector3.Cross(frontDirection, Vector3.forward).normalized;
+                        var front = (GetMouseWorldPosition() - newPosition);
+                        var frontDirectionXY = new Vector3(front.x, front.y, 0).normalized;
+                        var frontPosition = newPosition + (frontDirectionXY * flashlightDirectionArrowDistance);
+                        targetFlashlightDirectionArrow.position = frontPosition;
+                        targetFlashlightDirectionArrow.rotation *= Quaternion.FromToRotation(targetFlashlightDirectionArrow.up, frontDirectionXY);
                     }
                     
                     if (Input.GetKeyUp(KeyCode.Mouse0))
                     {
                         var mousePosition = GetMouseWorldPosition();
                         targetFlashlightPosition.position = mousePosition;
+                        foundPath = false;
                     }
 
                     if (Input.GetKeyDown(KeyCode.Return))
