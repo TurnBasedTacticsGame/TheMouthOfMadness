@@ -3641,6 +3641,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2649960109909005585, guid: ba719815000b178408d96de6520e2417, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6773174570799734929, guid: ba719815000b178408d96de6520e2417, type: 3}
       propertyPath: m_RootOrder
       value: 1
