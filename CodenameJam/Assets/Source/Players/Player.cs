@@ -3,6 +3,7 @@ using Source.GameEvents.Core;
 using UniDi;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 namespace Source.Players
 {
@@ -22,9 +23,9 @@ namespace Source.Players
 
         public PlayerState state = PlayerState.Moving;
 
-        public Transform targetPosition;
-        public Transform targetFlashlightPosition;
-        public Transform targetFlashlightDirectionArrow;
+        public TargeterUi targetPosition;
+        public TargeterUi targetFlashlightPosition;
+        public TargeterUi targetFlashlightDirectionArrow;
         public Transform flashlight;
 
         public float movementSpeed = 5;
@@ -42,13 +43,14 @@ namespace Source.Players
         [SerializeField] public float flashlightDirectionArrowDistance = 1f;
         [SerializeField] float arrowRotationSpeed = 0.1f;
         [SerializeField] float arrowPositionSpeed = 0.1f;
+        
         private Vector3 arrowPositionVelocity;
         private Quaternion arrowRotationVelocity;
-
+        
         private void Start()
         {
             path = new NavMeshPath();
-            TryFindPath(targetPosition.position);
+            TryFindPath(targetPosition.transform.position);
         }
 
         private void Update()
@@ -70,7 +72,7 @@ namespace Source.Players
                         var mousePosition = GetMouseWorldPosition();
                         if (TryFindPath(mousePosition))
                         {
-                            targetPosition.position = waypoints[waypoints.Count - 1];
+                            targetPosition.transform.position = waypoints[waypoints.Count - 1];
                             foundPath = true;
                             initialDirection = transform.up;
                         }
@@ -78,27 +80,33 @@ namespace Source.Players
 
                     if (Input.GetKey(KeyCode.Mouse0) && foundPath)
                     {
-                        var newPosition = targetPosition.position;
+                        var newPosition = targetPosition.transform.position;
                         var front = (GetMouseWorldPosition() - newPosition);
                         var frontDirectionXY = new Vector3(front.x, front.y, 0).normalized;
                         var frontPosition = newPosition + (frontDirectionXY * flashlightDirectionArrowDistance);
                         var angle = (Mathf.Atan2(frontDirectionXY.y, frontDirectionXY.x) * Mathf.Rad2Deg) - 90f;
-                        targetFlashlightDirectionArrow.SetPositionAndRotation(
-                            Vector3.Lerp(targetFlashlightDirectionArrow.position, frontPosition, arrowPositionSpeed * Time.unscaledDeltaTime), 
-                            Quaternion.Lerp(targetFlashlightDirectionArrow.rotation, Quaternion.Euler(new Vector3(0,0, angle)), arrowRotationSpeed * Time.unscaledDeltaTime)
+                        targetFlashlightDirectionArrow.transform.SetPositionAndRotation(
+                            Vector3.Lerp(targetFlashlightDirectionArrow.transform.position, frontPosition, arrowPositionSpeed * Time.unscaledDeltaTime), 
+                            Quaternion.Lerp(targetFlashlightDirectionArrow.transform.rotation, Quaternion.Euler(new Vector3(0,0, angle)), arrowRotationSpeed * Time.unscaledDeltaTime)
                             );
+
+                        targetPosition.IsTargeting(true);
+                        targetFlashlightDirectionArrow.IsTargeting(true);
                     }
                     
                     if (Input.GetKeyUp(KeyCode.Mouse0))
                     {
                         var mousePosition = GetMouseWorldPosition();
-                        targetFlashlightPosition.position = mousePosition;
+                        targetFlashlightPosition.transform.position = mousePosition;
                         foundPath = false;
                     }
 
                     if (Input.GetKeyDown(KeyCode.Return))
                     {
                         state = PlayerState.Moving;
+                        
+                        targetPosition.IsTargeting(false);
+                        targetFlashlightDirectionArrow.IsTargeting(false);
                     }
 
                     break;
@@ -122,7 +130,7 @@ namespace Source.Players
 
         private void UpdateMovement()
         {
-            var targetFlashlightRotation = Quaternion.Euler(0, 0, GetAngleDegrees(targetFlashlightPosition.position - transform.position));
+            var targetFlashlightRotation = Quaternion.Euler(0, 0, GetAngleDegrees(targetFlashlightPosition.transform.position - transform.position));
             var hasReachedTargetPosition = waypoints.Count == 0;
             var hasReachedTargetRotation = Quaternion.Angle(targetFlashlightRotation, flashlight.rotation) < 0.1f;
 
