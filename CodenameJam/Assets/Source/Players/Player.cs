@@ -40,8 +40,10 @@ namespace Source.Players
         
         [Header("UI")]
         [SerializeField] public float flashlightDirectionArrowDistance = 1f;
-        [SerializeField] float arrowRotationSmoothTime = 0.1f;
-        private Vector3 arrowVelocity;
+        [SerializeField] float arrowRotationSpeed = 0.1f;
+        [SerializeField] float arrowPositionSpeed = 0.1f;
+        private Vector3 arrowPositionVelocity;
+        private Quaternion arrowRotationVelocity;
 
         private void Start()
         {
@@ -80,8 +82,11 @@ namespace Source.Players
                         var front = (GetMouseWorldPosition() - newPosition);
                         var frontDirectionXY = new Vector3(front.x, front.y, 0).normalized;
                         var frontPosition = newPosition + (frontDirectionXY * flashlightDirectionArrowDistance);
-                        targetFlashlightDirectionArrow.position = frontPosition;
-                        targetFlashlightDirectionArrow.rotation *= Quaternion.FromToRotation(targetFlashlightDirectionArrow.up, frontDirectionXY);
+                        var angle = (Mathf.Atan2(frontDirectionXY.y, frontDirectionXY.x) * Mathf.Rad2Deg) - 90f;
+                        targetFlashlightDirectionArrow.SetPositionAndRotation(
+                            Vector3.Lerp(targetFlashlightDirectionArrow.position, frontPosition, arrowPositionSpeed * Time.unscaledDeltaTime), 
+                            Quaternion.Lerp(targetFlashlightDirectionArrow.rotation, Quaternion.Euler(new Vector3(0,0, angle)), arrowRotationSpeed * Time.unscaledDeltaTime)
+                            );
                     }
                     
                     if (Input.GetKeyUp(KeyCode.Mouse0))
