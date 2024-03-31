@@ -6,114 +6,57 @@ using UnityEngine;
 
 public class PickupLogUI : MonoBehaviour
 {
+    [Header("Dependencies")]
     [SerializeField] private TextMeshProUGUI textUi;
+    [SerializeField] private Animator animator;
+    [SerializeField] private TextWriter textWriter;
 
-    private PickupLogData pickupLogData;
-    private bool finished;
-    private int currentTextGroupIndex;
-    private int currentCharacterIndex;
-    private float nextCharacterTimer;
+    private TextData currentLogData;
+    private static readonly int Opened = Animator.StringToHash("Opened");
 
-    private void Start()
+
+    private void OnEnable()
     {
-        gameObject.SetActive(false);
+        textWriter.OnWriteCharacter += WriteToUi;
+        textUi.text = "";
     }
-
-    private void Update()
+    
+    private void OnDisable()
     {
-        if (finished)
-        {
-            return;
-        }
-        
-        nextCharacterTimer -= Time.unscaledDeltaTime;
-
-        if (nextCharacterTimer <= 0)
-        {
-            if (TryGetNextString(out var character))
-            { 
-                textUi.text += character;
-                nextCharacterTimer = pickupLogData.TextGroups[currentTextGroupIndex].timePerCharacter;
-            }
-            else
-            {
-                finished = true;
-            }
-        }
+        textWriter.OnWriteCharacter -= WriteToUi;
     }
-
-    public void Open(PickupLogData newLogData)
+    
+    public void StartOpening(TextData newLogData)
+    {
+        gameObject.SetActive(true);
+        animator.SetBool(Opened, true);
+        currentLogData = newLogData;
+    }
+    
+    // Used by button
+    public void StartClosing()
+    {
+        animator.SetBool(Opened, false);
+    }
+    
+    // Used by animator events
+    public void Open()
     {
         gameObject.SetActive(true);
         textUi.gameObject.SetActive(true);
-        textUi.text = "";
-        
-        pickupLogData = newLogData;
-        currentTextGroupIndex = 0;
-        currentCharacterIndex = 0;
-        finished = false;
+        textWriter.StartWriting(currentLogData);
     }
 
+    // Used by animator events
     public void Close()
     {
+        textWriter.StopWriting();
         gameObject.SetActive(false);
         textUi.gameObject.SetActive(false);
-        finished = true;
     }
 
-    private bool TryGetNextString(out string character)
+    private void WriteToUi(string characters)
     {
-        if (currentTextGroupIndex >= pickupLogData.TextGroups.Length)
-        {
-            character = "";
-            return false;
-        }
-
-        if (currentCharacterIndex >= pickupLogData.TextGroups[currentTextGroupIndex].text.Length)
-        {
-            currentCharacterIndex = 0;
-            currentTextGroupIndex++;
-            
-            // Check again
-            if (currentTextGroupIndex >= pickupLogData.TextGroups.Length 
-                || currentCharacterIndex >= pickupLogData.TextGroups[currentTextGroupIndex].text.Length)
-            {
-                character = "";
-                return false;
-            }
-        }
-
-        var text = pickupLogData.TextGroups[currentTextGroupIndex].text;
-
-        var potentialCharacter = text[currentCharacterIndex];
-        character = potentialCharacter.ToString();
-
-        var characterChanged = false;
-        switch (potentialCharacter)
-        {
-            // Tag support
-            case '<':
-                for (var i = currentCharacterIndex; i < text.Length; i++)
-                {
-                    var nextChar = text[i];
-                    if (nextChar == '>')
-                    {
-                        var tagLength = i - currentCharacterIndex;
-                        character = text.Substring(currentCharacterIndex, tagLength + 1);
-                        currentCharacterIndex += tagLength + 1;
-                        characterChanged  = true;
-                        break;
-                    }
-                }
-
-                break;
-        }
-
-        if (!characterChanged)
-        {
-            currentCharacterIndex++;
-        }
-        
-        return true;
+        textUi.text += characters;
     }
 }

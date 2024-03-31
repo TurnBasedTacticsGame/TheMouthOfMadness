@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Pickup Log Data", menuName = "Pickup Log Data")]
-public class PickupLogData : ScriptableObject
+[CreateAssetMenu(fileName = "Text Data", menuName = "Text Data")]
+public class TextData : ScriptableObject
 {
     public TextGroup[] TextGroups => textGroups;
     
