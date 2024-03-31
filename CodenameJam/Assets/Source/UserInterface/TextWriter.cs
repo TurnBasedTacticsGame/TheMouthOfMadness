@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UniDi;
 using UnityEngine;
 
 // This is a very roundabout implementation, but it works!
 public class TextWriter : MonoBehaviour
 {
-    [Header("Dependencies")]
     [SerializeField] private RandomAudioPlayer randomAudioPlayer;
     
     public event Action<string> OnWriteCharacter;
@@ -16,6 +16,7 @@ public class TextWriter : MonoBehaviour
     private int currentTextGroupIndex;
     private int currentCharacterIndex;
     private float nextCharacterTimer;
+    private int charactersWritten;
     
     private void Update()
     {
@@ -30,13 +31,14 @@ public class TextWriter : MonoBehaviour
         {
             if (TryGetNextString(out var character))
             {
+                charactersWritten++;
                 OnWriteCharacter?.Invoke(character);
                 // Hacky
-                if (character.Length == 1)
+                if (character.Length == 1 && charactersWritten % 3 == 0)
                 {
                     randomAudioPlayer.PlayRandomOnce(textData.TextGroups[currentTextGroupIndex].audioClipData);
                 }
-                nextCharacterTimer = textData.TextGroups[currentTextGroupIndex].timePerCharacter;
+                nextCharacterTimer = 0.01f;
             }
             else
             {

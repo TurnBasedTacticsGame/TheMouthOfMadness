@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6951d071bc95c94399362e842b69c5b, type: 3}
+  m_Name: LogTutorial
+  m_EditorClassIdentifier: 
+  textGroups:
+  - text: 'Welcome to Mount Oris.
+
+
+      You are an investigator sent here to uncover
+      the secrets of the so called "Mouth of Madness".
+
+
+      Find research notes
+      to progress deeper into the cave.
+
+
+      Controls:
+
+      Left click to move
+
+      -
+      Click to move to that location
+
+      - Drag to look in that direction
+
+      Enter
+      to confirm'
+    timePerCharacter: 0.2
+    audioClipData: {fileID: 11400000, guid: 6fff20efae3e99c4cb5a7c4c0bb177bf, type: 2}
