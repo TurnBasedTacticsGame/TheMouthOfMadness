@@ -20,6 +20,7 @@ namespace Source.Enemies
         [Header("Dependencies")]
         [SerializeField] private Rigidbody2D rb;
         [SerializeField] private AudioSource hissAudio;
+        [SerializeField] private Animator animator;
 
         [SerializeField] private float damage = 1;
         [SerializeField] private float movementSpeed = 1;
@@ -37,6 +38,7 @@ namespace Source.Enemies
 
         private EnemyState state;
         private Vector3 initialPosition;
+        private static readonly int Moving = Animator.StringToHash("Moving");
 
         private void Start()
         {
@@ -51,6 +53,8 @@ namespace Source.Enemies
             {
                 case EnemyState.Idle:
                 {
+                    animator.SetBool(Moving, false);
+                    
                     var playerDistance = (player.transform.position - transform.position).magnitude;
                     if (playerDistance < aggroRange)
                     {
@@ -70,6 +74,8 @@ namespace Source.Enemies
                 }
                 case EnemyState.MovingToPlayer:
                 {
+                    animator.SetBool(Moving, true);
+                    
                     SlowUpdatePath(player.transform.position);
                     if (GetPathLength() > maxPathRange || (player.transform.position - transform.position).magnitude > deaggroRange)
                     {
