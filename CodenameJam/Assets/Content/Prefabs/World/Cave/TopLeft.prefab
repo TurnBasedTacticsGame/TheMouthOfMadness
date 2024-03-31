@@ -1123,7 +1123,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 149530352735077299, guid: 764fa700612b0cd46b18763c4c9c04a8, type: 3}
       propertyPath: m_InstanceId
-      value: -218060
+      value: -328576
       objectReference: {fileID: 0}
     - target: {fileID: 149530352735077299, guid: 764fa700612b0cd46b18763c4c9c04a8, type: 3}
       propertyPath: m_ShapePath.Array.size
@@ -2441,7 +2441,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 149530352735077299, guid: 764fa700612b0cd46b18763c4c9c04a8, type: 3}
       propertyPath: m_InstanceId
-      value: -218036
+      value: -328552
       objectReference: {fileID: 0}
     - target: {fileID: 149530352735077299, guid: 764fa700612b0cd46b18763c4c9c04a8, type: 3}
       propertyPath: m_ShapePath.Array.size
@@ -3115,7 +3115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 149530352735077299, guid: 764fa700612b0cd46b18763c4c9c04a8, type: 3}
       propertyPath: m_InstanceId
-      value: -218048
+      value: -328564
       objectReference: {fileID: 0}
     - target: {fileID: 149530352735077299, guid: 764fa700612b0cd46b18763c4c9c04a8, type: 3}
       propertyPath: m_ShapePath.Array.size
@@ -3561,7 +3561,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 149530352735077299, guid: 764fa700612b0cd46b18763c4c9c04a8, type: 3}
       propertyPath: m_InstanceId
-      value: -218072
+      value: -328588
       objectReference: {fileID: 0}
     - target: {fileID: 149530352735077299, guid: 764fa700612b0cd46b18763c4c9c04a8, type: 3}
       propertyPath: m_ShapePath.Array.size
@@ -5599,7 +5599,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 149530352735077299, guid: 764fa700612b0cd46b18763c4c9c04a8, type: 3}
       propertyPath: m_InstanceId
-      value: -218084
+      value: -328600
       objectReference: {fileID: 0}
     - target: {fileID: 149530352735077299, guid: 764fa700612b0cd46b18763c4c9c04a8, type: 3}
       propertyPath: m_ShapePath.Array.size
@@ -9601,6 +9601,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 764fa700612b0cd46b18763c4c9c04a8, type: 3}
+--- !u!1 &2249557518248399490 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 149530352735077301, guid: 764fa700612b0cd46b18763c4c9c04a8, type: 3}
+  m_PrefabInstance: {fileID: 2101832701209776439}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6162872751276605767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2249557518248399490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff3a5c816076495db0782f458717772a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2249557518248399491 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 149530352735077300, guid: 764fa700612b0cd46b18763c4c9c04a8, type: 3}

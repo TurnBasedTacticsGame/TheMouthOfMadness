@@ -32,6 +32,11 @@ namespace Source.Convert2DTo3D
                     continue;
                 }
 
+                if (collider.TryGetComponent(out IgnoreConvert2DTo3D _))
+                {
+                    continue;
+                }
+
                 GameObject meshObject = null;
                 switch (collider)
                 {
