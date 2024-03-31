@@ -356,7 +356,6 @@ MonoBehaviour:
   maxHealth: 5
   maxTimeSpentMoving: 8
   moveCooldown: 0.25
-  flashlightDirectionArrowDistance: 1
   state: 1
   targetPosition: {fileID: 5267483388230834494}
   targetFlashlightPosition: {fileID: 5267483388281553409}
@@ -366,6 +365,9 @@ MonoBehaviour:
   rotationSpeed: 90
   timeSpentWaiting: 0
   timeSpentMoving: 0
+  flashlightDirectionArrowDistance: 1
+  arrowRotationSpeed: 10
+  arrowPositionSpeed: 10
 --- !u!50 &5267483387649177716
 Rigidbody2D:
   serializedVersion: 4
