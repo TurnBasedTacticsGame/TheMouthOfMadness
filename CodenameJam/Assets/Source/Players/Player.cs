@@ -5,22 +5,27 @@ using Source.GameEvents.Core;
 using UniDi;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
+using UnityEngine.Rendering.Universal;
 
 namespace Source.Players
 {
     public class Player : MonoBehaviour
     {
+        public event Action OnPlayerDeath; 
+
         [Header("Dependencies")]
         [SerializeField] private Rigidbody2D rb;
         [SerializeField] private CameraShaker cameraShaker;
         [SerializeField] private RandomAudioPlayer footstepsRandomAudioPlayer;
         [SerializeField] private AudioClipData footstepAudioData;
         [SerializeField] private Animator animator;
-        
-        [Header("Configuration")]
+        [SerializeField] private Light2DScaler radialLight2D;
+        [SerializeField] private Light2DScaler flashlightLight2D;
+
+        [Header("Configuration")] 
         [SerializeField] private float currentHealth = 5;
         [SerializeField] private float maxHealth = 5;
+        [SerializeField] private float damagedCooldown = 1f;
         [SerializeField] private float maxTimeSpentMoving = 8f;
         [SerializeField] public float moveCooldown = 0.25f;
 
@@ -44,6 +49,9 @@ namespace Source.Players
 
         public float TimeSpentWaiting { get; private set; } = float.PositiveInfinity;
         public float TimeSpentMoving { get; private set; }
+        
+        private bool canTakeDamage = true;
+        private float damageTimer;
         
         [Header("UI")]
         [SerializeField] private float flashlightDirectionArrowDistance = 1f;
@@ -161,6 +169,8 @@ namespace Source.Players
             }
 
             UpdateMovement();
+            UpdateDamage();
+            UpdateHealth();
         }
 
         private void UpdateMovement()
@@ -228,6 +238,49 @@ namespace Source.Players
             }
 
             return transform.position + Vector3.up;
+        }
+        
+        // In real game, should be inverted
+        public void TryTakeDamage(float damage)
+        {
+            if (!canTakeDamage) 
+                return;
+            
+            currentHealth -= damage;
+            currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+            damageTimer = damagedCooldown;
+            canTakeDamage = false;
+        }
+
+        public void Respawn()
+        {
+            currentHealth = maxHealth;
+        }
+
+        private void UpdateHealth()
+        {
+            var healthPercentage = currentHealth / maxHealth;
+            
+            radialLight2D.SetPercentage(healthPercentage);
+            flashlightLight2D.SetPercentage(healthPercentage);
+
+            if (currentHealth <= 0)
+            {
+                radialLight2D.SetPercentage(0);
+                flashlightLight2D.SetPercentage(0);
+                OnPlayerDeath?.Invoke();
+            }
+        }
+
+        private void UpdateDamage()
+        {
+            // Should only tick when unpaused. 
+            damageTimer -= Time.deltaTime;
+
+            if (damageTimer <= 0)
+            {
+                canTakeDamage = true;
+            }
         }
 
         public enum PlayerState

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Cysharp.Threading.Tasks;
 using Source.Players;
 using UniDi;
 using UnityEngine;
@@ -21,6 +22,7 @@ namespace Source.Enemies
         [SerializeField] private Rigidbody2D rb;
         [SerializeField] private AudioSource hissAudio;
         [SerializeField] private Animator animator;
+        [SerializeField] private AudioClipData hissingClips;
 
         [SerializeField] private float damage = 1;
         [SerializeField] private float movementSpeed = 1;
@@ -61,8 +63,9 @@ namespace Source.Enemies
                         SlowUpdatePath(player.transform.position);
                         if (path.status != NavMeshPathStatus.PathInvalid)
                         {
-                            hissAudio.Play();
                             state = EnemyState.MovingToPlayer;
+
+                            PlayHissAudio().Forget();
                         }
                     }
                     else
@@ -99,6 +102,22 @@ namespace Source.Enemies
                 {
                     waypoints.RemoveAt(0);
                 }
+            }
+        }
+
+        private async UniTask PlayHissAudio()
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(Random.Range(0.1f, 1f)), true);
+
+            hissAudio.clip = hissingClips.AudioClips[Random.Range(0, hissingClips.AudioClips.Length)];
+            hissAudio.Play();
+        }
+
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            if (col.TryGetComponent<Player>(out var player))
+            {
+                player.TryTakeDamage(damage);
             }
         }
 

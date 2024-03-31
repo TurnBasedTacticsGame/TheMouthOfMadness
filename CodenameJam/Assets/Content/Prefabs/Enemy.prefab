@@ -205,6 +205,7 @@ MonoBehaviour:
   rb: {fileID: 1549186556070145092}
   hissAudio: {fileID: 6280042361846424546}
   animator: {fileID: 5728322481440960582}
+  hissingClips: {fileID: 11400000, guid: 7819df3576db8a64296ec17c450045d8, type: 2}
   damage: 1
   movementSpeed: 0.5
   aggroRange: 10
@@ -296,6 +297,22 @@ PrefabInstance:
     - target: {fileID: 5961621452996278670, guid: d4a38aedc590eac42a32785acf2bc30c, type: 3}
       propertyPath: m_PlayOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241518756482739361, guid: d4a38aedc590eac42a32785acf2bc30c, type: 3}
+      propertyPath: occlusion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241518756482739361, guid: d4a38aedc590eac42a32785acf2bc30c, type: 3}
+      propertyPath: airAbsorption
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241518756482739361, guid: d4a38aedc590eac42a32785acf2bc30c, type: 3}
+      propertyPath: distanceAttenuation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241518756482739361, guid: d4a38aedc590eac42a32785acf2bc30c, type: 3}
+      propertyPath: maxTransmissionSurfaces
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4a38aedc590eac42a32785acf2bc30c, type: 3}

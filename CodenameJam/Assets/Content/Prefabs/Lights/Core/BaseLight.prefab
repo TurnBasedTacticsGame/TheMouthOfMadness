@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3972943793593293136}
   - component: {fileID: 3972943793593293139}
+  - component: {fileID: 544731605786081964}
   m_Layer: 0
   m_Name: BaseLight
   m_TagString: Untagged
@@ -111,3 +112,16 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &544731605786081964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3972943793593293137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a818ec18c0208946a67ec6103dc51fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  light2D: {fileID: 3972943793593293139}
