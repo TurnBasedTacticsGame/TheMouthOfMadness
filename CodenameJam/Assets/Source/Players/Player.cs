@@ -16,6 +16,7 @@ namespace Source.Players
         [SerializeField] private float maxHealth = 5;
         [SerializeField] private float maxTimeSpentMoving = 8f;
         [SerializeField] public float moveCooldown = 0.25f;
+        [SerializeField] public float flashlightDirectionArrowDistance = 1f;
 
         [Inject] private EventTracker tracker;
         [Inject] private Camera mainCamera;
@@ -24,6 +25,7 @@ namespace Source.Players
 
         public Transform targetPosition;
         public Transform targetFlashlightPosition;
+        public Transform targetFlashlightDirectionArrow;
         public Transform flashlight;
 
         public float movementSpeed = 5;
@@ -31,9 +33,11 @@ namespace Source.Players
 
         private List<Vector3> waypoints = new();
         private NavMeshPath path;
+        private bool foundPath;
 
         public float timeSpentWaiting;
         public float timeSpentMoving;
+        
 
         private void Start()
         {
@@ -61,10 +65,21 @@ namespace Source.Players
                         if (TryFindPath(mousePosition))
                         {
                             targetPosition.position = waypoints[waypoints.Count - 1];
+                            foundPath = true;
                         }
                     }
 
-                    if (Input.GetKeyDown(KeyCode.Mouse1))
+                    if (Input.GetKey(KeyCode.Mouse0) && foundPath)
+                    {
+                        var newPosition = targetPosition.position;
+                        var frontDirection = (GetMouseWorldPosition() - newPosition).normalized;
+                        var frontPosition = newPosition + (frontDirection * flashlightDirectionArrowDistance);
+                        targetFlashlightDirectionArrow.transform.position = frontPosition;
+                        targetFlashlightDirectionArrow.transform.up = frontDirection;
+                        targetFlashlightDirectionArrow.transform.right = Vector3.Cross(frontDirection, Vector3.forward).normalized;
+                    }
+                    
+                    if (Input.GetKeyUp(KeyCode.Mouse0))
                     {
                         var mousePosition = GetMouseWorldPosition();
                         targetFlashlightPosition.position = mousePosition;
