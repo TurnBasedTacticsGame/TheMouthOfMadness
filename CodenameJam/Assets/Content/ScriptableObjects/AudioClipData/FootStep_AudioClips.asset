@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57527e263b6b512489cfe5bb2feeac09, type: 3}
+  m_Name: FootStep_AudioClips
+  m_EditorClassIdentifier: 
+  audioClips:
+  - {fileID: 8300000, guid: 36355be37cb44ef44a6c795c87bc243d, type: 3}
+  - {fileID: 8300000, guid: 5182b9e95293f674aa05999d1289ebd8, type: 3}
+  - {fileID: 8300000, guid: c866c7116235d4e4497b578151232fb9, type: 3}
+  - {fileID: 8300000, guid: 8f33d7d15c40a8e4ebcaf333cf7e32eb, type: 3}
+  - {fileID: 8300000, guid: 2286e54e74117924a96ddce0681dec3c, type: 3}
+  - {fileID: 8300000, guid: 30694630e46459847b6944f743978e7a, type: 3}
+  - {fileID: 8300000, guid: 6c51980b5044d4b499a1b6ba14991b09, type: 3}
+  - {fileID: 8300000, guid: 5f987451fe618a242afc4dd3e3391147, type: 3}
+  - {fileID: 8300000, guid: a19bac20f0403d241aea6f44d67c8b08, type: 3}
+  - {fileID: 8300000, guid: 3da49fcd6e5ae8343a2cbeb389526da6, type: 3}
+  - {fileID: 8300000, guid: 9dd13b3a0a461f54dbfb76578be11454, type: 3}
+  - {fileID: 8300000, guid: 20d173daeaf54fe4e9f4c7631ed63295, type: 3}
+  - {fileID: 8300000, guid: 21a8f93f374dad647a68e8f72305fb85, type: 3}
+  - {fileID: 8300000, guid: 631b197384196324da3fe14c8bda461d, type: 3}
+  - {fileID: 8300000, guid: e87db6872853b0f4ea7e74f4c5549d18, type: 3}
+  - {fileID: 8300000, guid: fdf96ad5865764145a67c0755dc8f69e, type: 3}
+  - {fileID: 8300000, guid: d594856971551354e9b8b8b5d3700e4a, type: 3}
+  - {fileID: 8300000, guid: f14e9b733807b894290e060ed93a84ad, type: 3}
+  - {fileID: 8300000, guid: dd5804eb3a1644b478532b0cb8e930f4, type: 3}
+  - {fileID: 8300000, guid: af75ceaae66f2144cb17d6b8fc953b59, type: 3}
+  - {fileID: 8300000, guid: f225d3d6fc378ac409a804906ca7deb5, type: 3}
+  - {fileID: 8300000, guid: 0333e81a66c7b9c41b9ac0a65c600425, type: 3}
+  - {fileID: 8300000, guid: ebd285eda90cc0a4eb14042a675ef4cd, type: 3}
+  - {fileID: 8300000, guid: 78e4ef427d181244ba48f7556f2baec6, type: 3}
+  - {fileID: 8300000, guid: b887932a4b1579442a9ad0ce05081c97, type: 3}
+  - {fileID: 8300000, guid: ff5d9f0a2e9cdaa4b914077f30f1101c, type: 3}
+  averageTimePerClip: 0.8

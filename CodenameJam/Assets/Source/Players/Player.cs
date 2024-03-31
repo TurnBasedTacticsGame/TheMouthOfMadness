@@ -13,6 +13,8 @@ namespace Source.Players
         [Header("Dependencies")]
         [SerializeField] private Rigidbody2D rb;
         [SerializeField] private CameraShaker cameraShaker;
+        [SerializeField] private RandomAudioPlayer footstepsRandomAudioPlayer;
+        [SerializeField] private AudioClipData footstepAudioData;
 
         [Header("Configuration")]
         [SerializeField] private float currentHealth = 5;
@@ -138,10 +140,13 @@ namespace Source.Players
                 {
                     timeSpentMoving += Time.deltaTime;
                     timeSpentWaiting = 0;
+                    
+                    footstepsRandomAudioPlayer.StartPlayingRandom(footstepAudioData);
 
                     if (timeSpentMoving > maxTimeSpentMoving)
                     {
                         state = PlayerState.Waiting;
+                        footstepsRandomAudioPlayer.StopPlayingRandom();
                     }
 
                     break;

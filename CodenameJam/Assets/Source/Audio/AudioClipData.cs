@@ -6,6 +6,8 @@ using UnityEngine;
 public class AudioClipData : ScriptableObject
 {
     public AudioClip[] AudioClips => audioClips;
+    public float AverageTimePerClip => averageTimePerClip;
     
     [SerializeField] private AudioClip[] audioClips;
+    [SerializeField] private float averageTimePerClip;
 }
