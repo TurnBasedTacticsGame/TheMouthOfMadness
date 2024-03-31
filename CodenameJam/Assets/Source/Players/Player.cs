@@ -88,7 +88,8 @@ namespace Source.Players
                     if (Input.GetKey(KeyCode.Mouse0))
                     {
                         var front = (GetMouseWorldPosition() - targetPosition.transform.position);
-                        activeDirection = new Vector3(front.x, front.y, 0).normalized;
+                        var frontXY = new Vector3(front.x, front.y, 0);
+                        activeDirection = frontXY.magnitude > 0.2f ? frontXY.normalized : Vector3.up;
                     }
                     
                     
