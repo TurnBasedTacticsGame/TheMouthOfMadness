@@ -11,7 +11,7 @@ public class PickupLogUI : MonoBehaviour
     [Header("Dependencies")]
     [SerializeField] private TextMeshProUGUI textUi;
     [SerializeField] private Animator animator;
-    [SerializeField] private VirtualAudioSource audioSource;
+    [SerializeField] private RandomAudioPlayer randomAudioPlayer;
     [SerializeField] private TextWriter textWriter;
 
     private TextData currentLogData;
@@ -62,5 +62,6 @@ public class PickupLogUI : MonoBehaviour
     private void WriteToUi(string characters)
     {
         textUi.text += characters;
+        randomAudioPlayer.PlayRandomOnce();
     }
 }
