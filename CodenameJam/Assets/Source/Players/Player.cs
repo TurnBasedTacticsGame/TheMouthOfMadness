@@ -19,7 +19,8 @@ namespace Source.Players
         [SerializeField] private RandomAudioPlayer footstepsRandomAudioPlayer;
         [SerializeField] private AudioClipData footstepAudioData;
         [SerializeField] private Animator animator;
-        [SerializeField] private Light2D flashlightLight2D;
+        [SerializeField] private Light2DScaler radialLight2D;
+        [SerializeField] private Light2DScaler flashlightLight2D;
 
         [Header("Configuration")] 
         [SerializeField] private float currentHealth = 5;
@@ -59,17 +60,12 @@ namespace Source.Players
         [SerializeField] private float rejectedPathShakeIntensity;
         [SerializeField] private float rejectedPathShakeDuration;
         
-        private float startingLightIntensity = -1;
-        private float startingLightFalloffIntensity = -1;
         private Vector3 arrowPositionVelocity;
         private Quaternion arrowRotationVelocity;
         private static readonly int Moving = Animator.StringToHash("Moving");
 
         private void Start()
         {
-            startingLightIntensity = flashlightLight2D.intensity;
-            startingLightFalloffIntensity = flashlightLight2D.falloffIntensity;
-
             path = new NavMeshPath();
             TryFindPath(targetPosition.transform.position);
         }
@@ -173,6 +169,8 @@ namespace Source.Players
             }
 
             UpdateMovement();
+            UpdateDamage();
+            UpdateHealth();
         }
 
         private void UpdateMovement()
@@ -252,19 +250,26 @@ namespace Source.Players
             currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
             damageTimer = damagedCooldown;
             canTakeDamage = false;
-            
-            // Visuals
+        }
+
+        public void Respawn()
+        {
+            currentHealth = maxHealth;
+        }
+
+        private void UpdateHealth()
+        {
             var healthPercentage = currentHealth / maxHealth;
+            
+            radialLight2D.SetPercentage(healthPercentage);
+            flashlightLight2D.SetPercentage(healthPercentage);
 
-            var unset = startingLightIntensity < 0;
-            if (unset)
+            if (currentHealth <= 0)
             {
-                startingLightIntensity = flashlightLight2D.intensity;
-                startingLightFalloffIntensity = flashlightLight2D.falloffIntensity;
+                radialLight2D.SetPercentage(0);
+                flashlightLight2D.SetPercentage(0);
+                OnPlayerDeath?.Invoke();
             }
-
-            flashlightLight2D.intensity = Mathf.Lerp(0, startingLightIntensity, healthPercentage);
-            flashlightLight2D.falloffIntensity = Mathf.Lerp(startingLightFalloffIntensity, 1, healthPercentage);
         }
 
         private void UpdateDamage()

@@ -399,7 +399,8 @@ MonoBehaviour:
   footstepsRandomAudioPlayer: {fileID: 6956816563570676792}
   footstepAudioData: {fileID: 11400000, guid: e81dc6d66836d18498377565c1fa902f, type: 2}
   animator: {fileID: 2632980512157219897}
-  flashlightLight2D: {fileID: 9033316765643915199}
+  radialLight2D: {fileID: 8769671677314147947}
+  flashlightLight2D: {fileID: 5616327840493411392}
   currentHealth: 5
   maxHealth: 5
   damagedCooldown: 1
@@ -1351,22 +1352,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00ae830399782a24696aaf2d3d6e93e5, type: 3}
---- !u!4 &9033316765643915196 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3972943793593293136, guid: 00ae830399782a24696aaf2d3d6e93e5, type: 3}
-  m_PrefabInstance: {fileID: 5367854148617348844}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &9033316765643915199 stripped
+--- !u!114 &5616327840493411392 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3972943793593293139, guid: 00ae830399782a24696aaf2d3d6e93e5, type: 3}
+  m_CorrespondingSourceObject: {fileID: 544731605786081964, guid: 00ae830399782a24696aaf2d3d6e93e5, type: 3}
   m_PrefabInstance: {fileID: 5367854148617348844}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a818ec18c0208946a67ec6103dc51fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &9033316765643915196 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3972943793593293136, guid: 00ae830399782a24696aaf2d3d6e93e5, type: 3}
+  m_PrefabInstance: {fileID: 5367854148617348844}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7312582451720357711
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1511,3 +1512,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3972943793593293136, guid: 00ae830399782a24696aaf2d3d6e93e5, type: 3}
   m_PrefabInstance: {fileID: 9095977599512059079}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8769671677314147947 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 544731605786081964, guid: 00ae830399782a24696aaf2d3d6e93e5, type: 3}
+  m_PrefabInstance: {fileID: 9095977599512059079}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a818ec18c0208946a67ec6103dc51fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

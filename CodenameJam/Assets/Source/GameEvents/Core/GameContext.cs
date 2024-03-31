@@ -7,5 +7,6 @@ namespace Source.GameEvents.Core
         public VirtualAudioSource audioSourcePrefab;
 
         public bool IsPaused { get; set; }
+        public SpawnPoint ActiveSpawnPoint { get; set; }
     }
 }
