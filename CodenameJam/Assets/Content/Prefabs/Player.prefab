@@ -453,15 +453,12 @@ MonoBehaviour:
   damagedCooldown: 1
   maxTimeSpentMoving: 8
   moveCooldown: 0.25
-  state: 0
   targetPosition: {fileID: 7193468440646185891}
   targetFlashlightPosition: {fileID: 7930734781320064920}
   targetFlashlightDirectionArrow: {fileID: 6410691722219571455}
   flashlight: {fileID: 5267483388571425137}
   movementSpeed: 2
   rotationSpeed: 90
-  timeSpentWaiting: 0
-  timeSpentMoving: 0
   flashlightDirectionArrowDistance: 1
   arrowRotationSpeed: 10
   arrowPositionSpeed: 10
@@ -1507,11 +1504,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7312582452346641766, guid: a12561a8f9c7ce442919186e70b07fb6, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7312582452346641766, guid: a12561a8f9c7ce442919186e70b07fb6, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7312582452346641766, guid: a12561a8f9c7ce442919186e70b07fb6, type: 3}
       propertyPath: m_LocalPosition.x

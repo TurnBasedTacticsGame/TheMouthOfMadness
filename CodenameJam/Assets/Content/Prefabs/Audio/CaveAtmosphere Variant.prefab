@@ -96,6 +96,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7241518756482739361, guid: d4a38aedc590eac42a32785acf2bc30c, type: 3}
+      propertyPath: reflections
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241518756482739361, guid: d4a38aedc590eac42a32785acf2bc30c, type: 3}
       propertyPath: transmission
       value: 0
       objectReference: {fileID: 0}
