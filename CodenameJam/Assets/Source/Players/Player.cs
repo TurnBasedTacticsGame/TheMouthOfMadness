@@ -87,11 +87,21 @@ namespace Source.Players
 
                     if (Input.GetKey(KeyCode.Mouse0))
                     {
-                        var front = (GetMouseWorldPosition() - targetPosition.transform.position);
+                        var mousePosition = GetMouseWorldPosition();
+                        var front = (mousePosition - targetPosition.transform.position);
                         var frontXY = new Vector3(front.x, front.y, 0);
-                        activeDirection = frontXY.magnitude > 0.2f ? frontXY.normalized : Vector3.up;
+                        activeDirection = frontXY.normalized;
+                        
+                        // If mouse is too close, it causes undefined flashlight behavior.
+                        if (frontXY.magnitude > 0.2f)
+                        {
+                            activeDirection = frontXY.normalized;
+                            targetFlashlightPosition.transform.position = mousePosition;
+                        } else {
+                            activeDirection = Vector3.up;
+                            targetFlashlightPosition.transform.position = targetPosition.transform.position + Vector3.up;
+                        }
                     }
-                    
                     
                     if (Input.GetKeyDown(KeyCode.Mouse1))
                     {
@@ -111,12 +121,6 @@ namespace Source.Players
 
                         targetPosition.IsTargeting(true);
                         targetFlashlightDirectionArrow.IsTargeting(true);
-                    }
-                    
-                    if (Input.GetKeyUp(KeyCode.Mouse0))
-                    {
-                        var mousePosition = GetMouseWorldPosition();
-                        targetFlashlightPosition.transform.position = mousePosition;
                     }
 
                     if (Input.GetKeyDown(KeyCode.Return) && foundPath)
