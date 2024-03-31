@@ -6,9 +6,12 @@ using UnityEngine;
 
 public class PickupLogUI : MonoBehaviour
 {
+    public event Action OnPickupTextClose; 
+
     [Header("Dependencies")]
     [SerializeField] private TextMeshProUGUI textUi;
     [SerializeField] private Animator animator;
+    [SerializeField] private VirtualAudioSource audioSource;
     [SerializeField] private TextWriter textWriter;
 
     private TextData currentLogData;
@@ -51,6 +54,7 @@ public class PickupLogUI : MonoBehaviour
     public void Close()
     {
         textWriter.StopWriting();
+        OnPickupTextClose?.Invoke();
         gameObject.SetActive(false);
         textUi.gameObject.SetActive(false);
     }
