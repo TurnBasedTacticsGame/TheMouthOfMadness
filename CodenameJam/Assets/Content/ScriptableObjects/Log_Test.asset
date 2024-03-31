@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6951d071bc95c94399362e842b69c5b, type: 3}
   m_Name: Log_Test
   m_EditorClassIdentifier: 
-  text: Hello
+  textGroups:
+  - text: Hello <i>hi</i>
+    timePerCharacter: 0.149
+  - text: '<br>
+
+      Hello <i> hi </i>'
+    timePerCharacter: 0.155
