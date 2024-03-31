@@ -7,19 +7,28 @@ using Random = UnityEngine.Random;
 
 public class RandomAudioPlayer : MonoBehaviour
 {
-    [Tooltip("Leave as null if using Player's oneshot source")]
-    [SerializeField] private AudioSource optionalAudioSource;
+    [SerializeField] private VirtualAudioSource audioSourcePrefab;
+    [SerializeField] private int SourceCount = 10;
 
-    [Inject] private AudioSource playerAudioSource;
+    [Inject] private IInstantiator instantiator;
 
-    private AudioSource currentAudioSource;
     private AudioClipData audioClipData;
     private bool playingUntilStopped;
     private float timer = 0;
 
+    private int soundsPlayed;
+    private List<VirtualAudioSource> audioSources = new();
+
     private void Start()
     {
-        currentAudioSource = optionalAudioSource != null ? optionalAudioSource : playerAudioSource;
+        for (var i = 0; i < SourceCount; i++)
+        {
+            var source = instantiator.InstantiatePrefabForComponent<VirtualAudioSource>(audioSourcePrefab, transform);
+            source.AudioSource.playOnAwake = false;
+            source.AudioSource.Stop();
+
+            audioSources.Add(source);
+        }
     }
 
     private void Update()
@@ -39,9 +48,9 @@ public class RandomAudioPlayer : MonoBehaviour
     {
         if (data.AudioClips.Length == 0) return;
         
-        var index = Random.Range(0, data.AudioClips.Length);
-        currentAudioSource.clip = data.AudioClips[index];
-        currentAudioSource.Play();
+        audioSources[soundsPlayed % audioSources.Count].AudioSource.clip = data.AudioClips[Random.Range(0, data.AudioClips.Length)];
+        audioSources[soundsPlayed % audioSources.Count].AudioSource.Play();
+        soundsPlayed++;
     }
 
     public void StartPlayingRandom(AudioClipData data)

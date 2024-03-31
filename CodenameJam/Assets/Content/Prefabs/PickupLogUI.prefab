@@ -151,7 +151,6 @@ GameObject:
   - component: {fileID: 4879351920216156968}
   - component: {fileID: 4879351920216156974}
   - component: {fileID: 4879351920216156975}
-  - component: {fileID: 1523621301}
   m_Layer: 5
   m_Name: PickupLogUI
   m_TagString: Untagged
@@ -303,7 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b863496fb918bb5429143ff0b2157317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomAudioPlayer: {fileID: 1523621301}
+  randomAudioPlayer: {fileID: 0}
 --- !u!114 &4879351920216156974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,16 +341,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!114 &1523621301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4879351920216156976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0348441878235ae47910f6a687414526, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  optionalAudioSource: {fileID: 0}

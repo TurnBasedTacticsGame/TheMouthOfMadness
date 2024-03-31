@@ -44,6 +44,11 @@ public class DestructableRocks : MonoBehaviour
 
     private void TryCrackCompletely()
     {
+        if (!this)
+        {
+            return;
+        }
+        
         if (crackCount >= requiredLogsCount)
         {
             audioSource.Play();

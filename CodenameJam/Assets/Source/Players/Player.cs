@@ -32,7 +32,7 @@ namespace Source.Players
         [Inject] private EventTracker tracker;
         [Inject] private Camera mainCamera;
 
-        public PlayerState state = PlayerState.Moving;
+        public PlayerState State { get; private set; }= PlayerState.Waiting;
 
         public TargeterUi targetPosition;
         public TargeterUi targetFlashlightPosition;
@@ -47,8 +47,8 @@ namespace Source.Players
         private bool foundPath;
         private Vector3 activeDirection;
 
-        public float timeSpentWaiting;
-        public float timeSpentMoving;
+        public float TimeSpentWaiting { get; private set; } = float.PositiveInfinity;
+        public float TimeSpentMoving { get; private set; }
         
         private bool canTakeDamage = true;
         private float damageTimer;
@@ -72,14 +72,14 @@ namespace Source.Players
 
         private void Update()
         {
-            switch (state)
+            switch (State)
             {
                 case PlayerState.Waiting:
                 {
                     animator.SetBool(Moving, false);
                     
-                    timeSpentWaiting += Time.deltaTime;
-                    timeSpentMoving = 0;
+                    TimeSpentWaiting += Time.deltaTime;
+                    TimeSpentMoving = 0;
 
                     if (Time.timeScale > 0.1f)
                     {
@@ -140,7 +140,7 @@ namespace Source.Players
 
                     if (Input.GetKeyDown(KeyCode.Return) && foundPath)
                     {
-                        state = PlayerState.Moving;
+                        State = PlayerState.Moving;
                         
                         targetPosition.IsTargeting(false);
                         targetFlashlightDirectionArrow.IsTargeting(false);
@@ -153,14 +153,14 @@ namespace Source.Players
                 {
                     animator.SetBool(Moving, true);
                     
-                    timeSpentMoving += Time.deltaTime;
-                    timeSpentWaiting = 0;
-                    
+                    TimeSpentMoving += Time.deltaTime;
+                    TimeSpentWaiting = 0;
+
                     footstepsRandomAudioPlayer.StartPlayingRandom(footstepAudioData);
 
-                    if (timeSpentMoving > maxTimeSpentMoving)
+                    if (TimeSpentMoving > maxTimeSpentMoving)
                     {
-                        state = PlayerState.Waiting;
+                        State = PlayerState.Waiting;
                         footstepsRandomAudioPlayer.StopPlayingRandom();
                     }
 
@@ -179,9 +179,9 @@ namespace Source.Players
             var hasReachedTargetPosition = waypoints.Count == 0;
             var hasReachedTargetRotation = Quaternion.Angle(targetFlashlightRotation, flashlight.rotation) < 0.1f;
 
-            if (state == PlayerState.Moving && hasReachedTargetPosition && hasReachedTargetRotation)
+            if (State == PlayerState.Moving && hasReachedTargetPosition && hasReachedTargetRotation)
             {
-                state = PlayerState.Waiting;
+                State = PlayerState.Waiting;
 
                 return;
             }

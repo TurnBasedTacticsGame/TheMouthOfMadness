@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Log4
   m_EditorClassIdentifier: 
   textGroups:
-  - text: "There\u2019s more and more meat and flesh in the walls and I don\u2019t
-      know what to do it can\u2019t be real it can\u2019t be real this has to be
-      a dream. There\u2019s no way there\u2019s a cave in my town that people go
-      into and then there\u2019s meat and dead bodies down here this is a bad bad
-      dream and I\u2019ll wake up and I\u2019ll hug my mom and dad and go to school
-      and I\u2019ll be thankful I\u2019m sorry I just want to wake up I just want
-      to wake up please I want to wake up.\r\n\r\nI\u2019m so scared. Please, Mom,
-      Dad. Please."
+  - text: "IT\u2019S BEEN HOURSSS. I\u2019m not grounded even like I\u2019m pretty
+      sure my Mom is putting out an Amber Alert for me and when I come home I\u2019m
+      so screwed!!! I\u2019m super mega forever grounded I\u2019m going to prison!!!
+      Like it keeps on going and going and I\u2019m out of my snacks and there\u2019s
+      so many more of the dead people and I don\u2019t know where they come from.
+      Maybe farther inside? \r\n\r\nThe walls move. Like a chest when it\u2019s like
+      breathing but I don\u2019t know. Maybe I\u2019m seeing things? I don\u2019t
+      know, this barely feels real anymore sometimes"
     timePerCharacter: 0.1
     audioClipData: {fileID: 11400000, guid: 6fff20efae3e99c4cb5a7c4c0bb177bf, type: 2}

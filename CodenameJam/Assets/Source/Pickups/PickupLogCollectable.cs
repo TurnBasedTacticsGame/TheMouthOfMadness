@@ -1,4 +1,5 @@
 using System;
+using Source.Players;
 using UniDi;
 using UnityEngine;
 
@@ -16,7 +17,10 @@ public class PickupLogCollectable : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (pickedUp) return;
+        if (pickedUp || !(col.attachedRigidbody && col.attachedRigidbody.TryGetComponent(out Player _)))
+        {
+            return;
+        }
 
         pickupLogUI.StartOpening(data);
         audioSource.Play();
