@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Log8
   m_EditorClassIdentifier: 
   textGroups:
-  - text: "There\u2019s more and more meat and flesh in the walls and I don\u2019t
-      know what to do it can\u2019t be real it can\u2019t be real this has to be
-      a dream. There\u2019s no way there\u2019s a cave in my town that people go
-      into and then there\u2019s meat and dead bodies down here this is a bad bad
-      dream and I\u2019ll wake up and I\u2019ll hug my mom and dad and go to school
-      and I\u2019ll be thankful I\u2019m sorry I just want to wake up I just want
-      to wake up please I want to wake up.\r\n\r\nI\u2019m so scared. Please, Mom,
-      Dad. Please."
+  - text: "I will not let it devour me. I am no simple man, I am nobility. The land
+      has been my plaything for years, I have a right to it. I have a right to rule.
+      We have tapped into a power they cannot fathom and we summoned it onto this
+      mortal plane to do our bidding. \r\n\r\nIt will do my bidding, I know, even
+      as flesh and unholy life sprung out of the ritual circle, devouring the cavern.
+      Devouring my companions. I will not bow to it; I have never bowed to anything
+      in my life. I will tame this power, I will best it, and when I do, I will truly
+      be a God."
     timePerCharacter: 0.1
     audioClipData: {fileID: 11400000, guid: 6fff20efae3e99c4cb5a7c4c0bb177bf, type: 2}

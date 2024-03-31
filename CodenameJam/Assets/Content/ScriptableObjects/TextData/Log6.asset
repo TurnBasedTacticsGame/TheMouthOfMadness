@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: Log6
   m_EditorClassIdentifier: 
   textGroups:
-  - text: "There\u2019s more and more meat and flesh in the walls and I don\u2019t
-      know what to do it can\u2019t be real it can\u2019t be real this has to be
-      a dream. There\u2019s no way there\u2019s a cave in my town that people go
-      into and then there\u2019s meat and dead bodies down here this is a bad bad
-      dream and I\u2019ll wake up and I\u2019ll hug my mom and dad and go to school
-      and I\u2019ll be thankful I\u2019m sorry I just want to wake up I just want
-      to wake up please I want to wake up.\r\n\r\nI\u2019m so scared. Please, Mom,
-      Dad. Please."
+  - text: "The geological yields to the biological. I wish I had better instruments
+      with me, but I did not know that the anomaly would be so extensive. The transition
+      zone is fascinating to me, and makes me wonder if it has always been here or
+      if the flesh is creeping in from further in. Could the meat eventually escape
+      into the outside world? There is stomach acid on the floor now, sizzling against
+      my shoes. I\u2019m descending into the belly of something. I wonder if I am
+      more meal, parasite, or intruder. \r\n\r\nI will not escape, I know this. My
+      only hope is to preserve these notes and let someone else who may escape to
+      see them. I hope that person is reading these notes now."
     timePerCharacter: 0.1
     audioClipData: {fileID: 11400000, guid: 6fff20efae3e99c4cb5a7c4c0bb177bf, type: 2}
