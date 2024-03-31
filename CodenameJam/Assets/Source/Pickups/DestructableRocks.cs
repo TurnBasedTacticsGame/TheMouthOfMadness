@@ -13,7 +13,8 @@ public class DestructableRocks : MonoBehaviour
     [SerializeField] private List<PickupLogCollectable> pickupLogsRequiredToOpen;
 
     [Inject] private PickupLogUI pickupLogUI;
-    
+
+    private int requiredLogsCount;
     private int crackCount;
     
     private void OnEnable()
@@ -31,6 +32,11 @@ public class DestructableRocks : MonoBehaviour
         pickupLogUI.OnPickupTextClose -= TryCrackCompletely;
     }
 
+    private void Start()
+    {
+        requiredLogsCount = pickupLogsRequiredToOpen.Count;
+    }
+
     private void CrackFurther()
     {
         crackCount++;
@@ -38,7 +44,7 @@ public class DestructableRocks : MonoBehaviour
 
     private void TryCrackCompletely()
     {
-        if (crackCount >= pickupLogsRequiredToOpen.Count)
+        if (crackCount >= requiredLogsCount)
         {
             audioSource.Play();
             Destroy(gameObject);
