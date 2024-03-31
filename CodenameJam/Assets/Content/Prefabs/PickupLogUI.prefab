@@ -289,6 +289,8 @@ MonoBehaviour:
   textUi: {fileID: 4879351919572491868}
   animator: {fileID: 4879351920216156975}
   textWriter: {fileID: 4879351920216156968}
+  openLogClip: {fileID: 8300000, guid: 7e9f22c962333ae45aa72ed6f58ac099, type: 3}
+  closeLogClip: {fileID: 8300000, guid: 390df438729762b4e852c61f98584a03, type: 3}
 --- !u!114 &4879351920216156968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,3 +354,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0348441878235ae47910f6a687414526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  optionalAudioSource: {fileID: 0}

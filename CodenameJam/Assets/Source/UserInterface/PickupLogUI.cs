@@ -16,6 +16,11 @@ public class PickupLogUI : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private TextWriter textWriter;
 
+    [SerializeField] private AudioClip openLogClip;
+    [SerializeField] private AudioClip closeLogClip;
+
+    [Inject] private AudioSource playerAudioSource;
+    
     private TextData currentLogData;
     private static readonly int Opened = Animator.StringToHash("Opened");
 
@@ -29,11 +34,20 @@ public class PickupLogUI : MonoBehaviour
     {
         textWriter.OnWriteCharacter -= WriteToUi;
     }
-    
+
+    private void Start()
+    {
+        gameObject.SetActive(false);
+        textUi.gameObject.SetActive(false);
+    }
+
     public void StartOpening(TextData newLogData)
     {
+        playerAudioSource.clip = openLogClip;
+        playerAudioSource.Play();
         gameObject.SetActive(true);
         animator.SetBool(Opened, true);
+
         currentLogData = newLogData;
         PlayerIsReading = true;
     }
@@ -42,6 +56,8 @@ public class PickupLogUI : MonoBehaviour
     public void StartClosing()
     {
         animator.SetBool(Opened, false);
+        playerAudioSource.clip = closeLogClip;
+        playerAudioSource.Play();
     }
     
     // Used by animator events
@@ -49,6 +65,7 @@ public class PickupLogUI : MonoBehaviour
     {
         gameObject.SetActive(true);
         textUi.gameObject.SetActive(true);
+
         textWriter.StartWriting(currentLogData);
     }
 
