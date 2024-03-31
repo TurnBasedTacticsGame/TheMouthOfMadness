@@ -71,7 +71,7 @@ namespace Source.Enemies
                 case EnemyState.MovingToPlayer:
                 {
                     SlowUpdatePath(player.transform.position);
-                    if (GetPathLength() > maxPathRange)
+                    if (GetPathLength() > maxPathRange || (player.transform.position - transform.position).magnitude > deaggroRange)
                     {
                         state = EnemyState.Idle;
                     }
