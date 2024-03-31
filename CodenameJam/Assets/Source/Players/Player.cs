@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Cinemachine;
 using Source.GameEvents.Core;
 using UniDi;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace Source.Players
     {
         [Header("Dependencies")]
         [SerializeField] private Rigidbody2D rb;
+        [SerializeField] private CameraShaker cameraShaker;
 
         [Header("Configuration")]
         [SerializeField] private float currentHealth = 5;
@@ -34,15 +36,17 @@ namespace Source.Players
         private List<Vector3> waypoints = new();
         private NavMeshPath path;
         private bool foundPath;
-        private Vector3 initialDirection;
+        private Vector3 activeDirection;
 
         public float timeSpentWaiting;
         public float timeSpentMoving;
         
         [Header("UI")]
-        [SerializeField] public float flashlightDirectionArrowDistance = 1f;
-        [SerializeField] float arrowRotationSpeed = 0.1f;
-        [SerializeField] float arrowPositionSpeed = 0.1f;
+        [SerializeField] private float flashlightDirectionArrowDistance = 1f;
+        [SerializeField] private float arrowRotationSpeed = 0.1f;
+        [SerializeField] private float arrowPositionSpeed = 0.1f;
+        [SerializeField] private float rejectedPathShakeIntensity;
+        [SerializeField] private float rejectedPathShakeDuration;
         
         private Vector3 arrowPositionVelocity;
         private Quaternion arrowRotationVelocity;
@@ -74,21 +78,35 @@ namespace Source.Players
                         {
                             targetPosition.transform.position = waypoints[waypoints.Count - 1];
                             foundPath = true;
-                            initialDirection = transform.up;
+                        }
+                        else
+                        {
+                            cameraShaker.Shake(rejectedPathShakeIntensity, rejectedPathShakeDuration);
                         }
                     }
 
-                    if (Input.GetKey(KeyCode.Mouse0) && foundPath)
+                    if (Input.GetKey(KeyCode.Mouse0))
                     {
-                        var newPosition = targetPosition.transform.position;
-                        var front = (GetMouseWorldPosition() - newPosition);
-                        var frontDirectionXY = new Vector3(front.x, front.y, 0).normalized;
-                        var frontPosition = newPosition + (frontDirectionXY * flashlightDirectionArrowDistance);
-                        var angle = (Mathf.Atan2(frontDirectionXY.y, frontDirectionXY.x) * Mathf.Rad2Deg) - 90f;
+                        var front = (GetMouseWorldPosition() - targetPosition.transform.position);
+                        activeDirection = new Vector3(front.x, front.y, 0).normalized;
+                    }
+                    
+                    
+                    if (Input.GetKeyDown(KeyCode.Mouse1))
+                    {
+                        targetPosition.IsTargeting(false);
+                        targetFlashlightDirectionArrow.IsTargeting(false);
+                        foundPath = false;
+                    }
+
+                    if (foundPath)
+                    {
+                        var frontPosition = targetPosition.transform.position + (activeDirection * flashlightDirectionArrowDistance);
+                        var angle = (Mathf.Atan2(activeDirection.y, activeDirection.x) * Mathf.Rad2Deg) - 90f;
                         targetFlashlightDirectionArrow.transform.SetPositionAndRotation(
                             Vector3.Lerp(targetFlashlightDirectionArrow.transform.position, frontPosition, arrowPositionSpeed * Time.unscaledDeltaTime), 
                             Quaternion.Lerp(targetFlashlightDirectionArrow.transform.rotation, Quaternion.Euler(new Vector3(0,0, angle)), arrowRotationSpeed * Time.unscaledDeltaTime)
-                            );
+                        );
 
                         targetPosition.IsTargeting(true);
                         targetFlashlightDirectionArrow.IsTargeting(true);
@@ -98,15 +116,15 @@ namespace Source.Players
                     {
                         var mousePosition = GetMouseWorldPosition();
                         targetFlashlightPosition.transform.position = mousePosition;
-                        foundPath = false;
                     }
 
-                    if (Input.GetKeyDown(KeyCode.Return))
+                    if (Input.GetKeyDown(KeyCode.Return) && foundPath)
                     {
                         state = PlayerState.Moving;
                         
                         targetPosition.IsTargeting(false);
                         targetFlashlightDirectionArrow.IsTargeting(false);
+                        foundPath = false;
                     }
 
                     break;

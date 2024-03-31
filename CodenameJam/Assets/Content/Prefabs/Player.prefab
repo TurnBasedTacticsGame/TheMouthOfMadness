@@ -310,6 +310,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5267483387649177713}
   - component: {fileID: 5267483387649177717}
+  - component: {fileID: 3583402662056201544}
   - component: {fileID: 5267483387649177716}
   - component: {fileID: 6664269791353730848}
   m_Layer: 0
@@ -352,6 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 5267483387649177716}
+  cameraShaker: {fileID: 3583402662056201544}
   currentHealth: 5
   maxHealth: 5
   maxTimeSpentMoving: 8
@@ -368,6 +370,20 @@ MonoBehaviour:
   flashlightDirectionArrowDistance: 1
   arrowRotationSpeed: 10
   arrowPositionSpeed: 10
+  rejectedPathShakeIntensity: 5
+  rejectedPathShakeDuration: 0.1
+--- !u!114 &3583402662056201544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5267483387649177712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7661a0250dd23464094f4bf9a4c760dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!50 &5267483387649177716
 Rigidbody2D:
   serializedVersion: 4
