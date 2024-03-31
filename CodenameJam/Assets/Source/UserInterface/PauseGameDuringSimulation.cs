@@ -11,6 +11,7 @@ namespace Source.UserInterface
 
         [Inject] private Player player;
         [Inject] private GameContext gameContext;
+        [Inject] private PickupLogUI pickupLogUI;
 
         private float initialFixedDeltaTime;
         private float timeScale = 0;
@@ -24,7 +25,9 @@ namespace Source.UserInterface
 
         private void Update()
         {
-            var shouldPause = player.state == Player.PlayerState.Waiting && player.timeSpentWaiting > player.moveCooldown;
+            var shouldPause = (player.state == Player.PlayerState.Waiting 
+                              && player.timeSpentWaiting > player.moveCooldown) 
+                              || pickupLogUI.PlayerIsReading;
 
             var targetTimeScale = shouldPause ? 0 : 1;
             timeScale = Mathf.MoveTowards(timeScale, targetTimeScale, Time.unscaledDeltaTime * transitionSpeed);

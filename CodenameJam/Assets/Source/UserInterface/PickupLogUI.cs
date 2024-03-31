@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class PickupLogUI : MonoBehaviour
 {
+    public bool PlayerIsReading { get; set; }
+    
     public event Action OnPickupTextClose; 
 
     [Header("Dependencies")]
@@ -33,6 +35,7 @@ public class PickupLogUI : MonoBehaviour
         gameObject.SetActive(true);
         animator.SetBool(Opened, true);
         currentLogData = newLogData;
+        PlayerIsReading = true;
     }
     
     // Used by button
@@ -56,6 +59,7 @@ public class PickupLogUI : MonoBehaviour
         OnPickupTextClose?.Invoke();
         gameObject.SetActive(false);
         textUi.gameObject.SetActive(false);
+        PlayerIsReading = false;
     }
 
     private void WriteToUi(string characters)
