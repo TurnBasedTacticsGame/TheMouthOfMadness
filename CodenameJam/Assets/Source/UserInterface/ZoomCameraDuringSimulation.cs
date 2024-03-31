@@ -14,6 +14,7 @@ namespace Source.UserInterface
         public float smoothTime = 0.5f;
 
         [Inject] private GameContext gameContext;
+        [Inject] private Camera mainCamera;
 
         private float currentZoomVelocity;
 
@@ -21,6 +22,7 @@ namespace Source.UserInterface
         {
             var targetZoom = gameContext.IsPaused ? pausedZoom : simulationZoom;
             virtualCamera.m_Lens.OrthographicSize = Mathf.SmoothDamp(virtualCamera.m_Lens.OrthographicSize, targetZoom, ref currentZoomVelocity, smoothTime, float.PositiveInfinity, Time.unscaledDeltaTime);
+            mainCamera.orthographicSize = virtualCamera.m_Lens.OrthographicSize;
         }
     }
 }
