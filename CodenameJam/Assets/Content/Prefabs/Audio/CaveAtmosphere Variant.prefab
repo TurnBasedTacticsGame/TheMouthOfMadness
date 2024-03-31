@@ -73,7 +73,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5961621452996278670, guid: d4a38aedc590eac42a32785acf2bc30c, type: 3}
       propertyPath: m_Volume
-      value: 1
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 5961621452996278670, guid: d4a38aedc590eac42a32785acf2bc30c, type: 3}
       propertyPath: m_Enabled
@@ -101,11 +101,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7241518756482739361, guid: d4a38aedc590eac42a32785acf2bc30c, type: 3}
       propertyPath: airAbsorption
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7241518756482739361, guid: d4a38aedc590eac42a32785acf2bc30c, type: 3}
       propertyPath: distanceAttenuation
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4a38aedc590eac42a32785acf2bc30c, type: 3}
