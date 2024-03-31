@@ -3557,6 +3557,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 149530352735077299, guid: 764fa700612b0cd46b18763c4c9c04a8, type: 3}
+      propertyPath: m_InstanceId
+      value: -217736
+      objectReference: {fileID: 0}
+    - target: {fileID: 149530352735077299, guid: 764fa700612b0cd46b18763c4c9c04a8, type: 3}
       propertyPath: m_ShapePath.Array.size
       value: 432
       objectReference: {fileID: 0}
