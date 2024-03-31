@@ -102,6 +102,14 @@ namespace Source.Enemies
             }
         }
 
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            if (col.TryGetComponent<Player>(out var player))
+            {
+                player.TryTakeDamage(damage);
+            }
+        }
+
         private float GetPathLength()
         {
             var result = 0f;

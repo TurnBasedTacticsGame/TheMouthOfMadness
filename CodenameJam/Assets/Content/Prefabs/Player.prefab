@@ -399,8 +399,10 @@ MonoBehaviour:
   footstepsRandomAudioPlayer: {fileID: 6956816563570676792}
   footstepAudioData: {fileID: 11400000, guid: e81dc6d66836d18498377565c1fa902f, type: 2}
   animator: {fileID: 2632980512157219897}
+  flashlightLight2D: {fileID: 9033316765643915199}
   currentHealth: 5
   maxHealth: 5
+  damagedCooldown: 1
   maxTimeSpentMoving: 8
   moveCooldown: 0.25
   state: 1
@@ -1354,6 +1356,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3972943793593293136, guid: 00ae830399782a24696aaf2d3d6e93e5, type: 3}
   m_PrefabInstance: {fileID: 5367854148617348844}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9033316765643915199 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3972943793593293139, guid: 00ae830399782a24696aaf2d3d6e93e5, type: 3}
+  m_PrefabInstance: {fileID: 5367854148617348844}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7312582451720357711
 PrefabInstance:
   m_ObjectHideFlags: 0

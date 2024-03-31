@@ -22,9 +22,9 @@ namespace Source.Players
         [SerializeField] private Light2D flashlightLight2D;
 
         [Header("Configuration")] 
-        [SerializeField] private bool canTakeDamage = true;
         [SerializeField] private float currentHealth = 5;
         [SerializeField] private float maxHealth = 5;
+        [SerializeField] private float damagedCooldown = 1f;
         [SerializeField] private float maxTimeSpentMoving = 8f;
         [SerializeField] public float moveCooldown = 0.25f;
 
@@ -49,6 +49,9 @@ namespace Source.Players
         public float timeSpentWaiting;
         public float timeSpentMoving;
         
+        private bool canTakeDamage = true;
+        private float damageTimer;
+        
         [Header("UI")]
         [SerializeField] private float flashlightDirectionArrowDistance = 1f;
         [SerializeField] private float arrowRotationSpeed = 0.1f;
@@ -64,6 +67,9 @@ namespace Source.Players
 
         private void Start()
         {
+            startingLightIntensity = flashlightLight2D.intensity;
+            startingLightFalloffIntensity = flashlightLight2D.falloffIntensity;
+
             path = new NavMeshPath();
             TryFindPath(targetPosition.transform.position);
         }
@@ -236,13 +242,18 @@ namespace Source.Players
             return transform.position + Vector3.up;
         }
         
-        public void TakeDamage(float damage)
+        // In real game, should be inverted
+        public void TryTakeDamage(float damage)
         {
             if (!canTakeDamage) 
                 return;
             
             currentHealth -= damage;
             currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+            damageTimer = damagedCooldown;
+            canTakeDamage = false;
+            
+            // Visuals
             var healthPercentage = currentHealth / maxHealth;
 
             var unset = startingLightIntensity < 0;
@@ -253,7 +264,18 @@ namespace Source.Players
             }
 
             flashlightLight2D.intensity = Mathf.Lerp(0, startingLightIntensity, healthPercentage);
-            flashlightLight2D.falloffIntensity = Mathf.Lerp(startingLightIntensity, 1, healthPercentage);
+            flashlightLight2D.falloffIntensity = Mathf.Lerp(startingLightFalloffIntensity, 1, healthPercentage);
+        }
+
+        private void UpdateDamage()
+        {
+            // Should only tick when unpaused. 
+            damageTimer -= Time.deltaTime;
+
+            if (damageTimer <= 0)
+            {
+                canTakeDamage = true;
+            }
         }
 
         public enum PlayerState
