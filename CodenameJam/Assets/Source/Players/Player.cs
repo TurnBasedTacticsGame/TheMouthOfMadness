@@ -25,7 +25,9 @@ namespace Source.Players
         [Header("Configuration")] 
         [SerializeField] private float currentHealth = 5;
         [SerializeField] private float maxHealth = 5;
-        [SerializeField] private float damagedCooldown = 1f;
+        [SerializeField] private float timeUntilDamageable = 1f;
+        [SerializeField] private float timeUntilRegeneratingHealth = 5f;
+        [SerializeField] private float secondsUntilRegenerated = 1f;
         [SerializeField] private float maxTimeSpentMoving = 8f;
         [SerializeField] public float moveCooldown = 0.25f;
 
@@ -51,7 +53,9 @@ namespace Source.Players
         public float TimeSpentMoving { get; private set; }
         
         private bool canTakeDamage = true;
+        private bool regeneratingHealth = false;
         private float damageTimer;
+        private float regenTimer;
         
         [Header("UI")]
         [SerializeField] private float flashlightDirectionArrowDistance = 1f;
@@ -62,6 +66,7 @@ namespace Source.Players
         
         private Vector3 arrowPositionVelocity;
         private Quaternion arrowRotationVelocity;
+        private float regenerationVelocity;
         private static readonly int Moving = Animator.StringToHash("Moving");
 
         private void Start()
@@ -248,7 +253,9 @@ namespace Source.Players
             
             currentHealth -= damage;
             currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-            damageTimer = damagedCooldown;
+            regenTimer = timeUntilRegeneratingHealth;
+            regeneratingHealth = false;
+            damageTimer = timeUntilDamageable;
             canTakeDamage = false;
         }
 
@@ -269,6 +276,19 @@ namespace Source.Players
                 radialLight2D.SetPercentage(0);
                 flashlightLight2D.SetPercentage(0);
                 OnPlayerDeath?.Invoke();
+            }
+
+            // Use scaled time. 
+            regenTimer -= Time.deltaTime;
+            if (regenTimer <= 0)
+            {
+                regeneratingHealth = true;
+                regenTimer = 0;
+            }
+
+            if (regeneratingHealth)
+            {
+                currentHealth = Mathf.SmoothDamp(currentHealth, maxHealth, ref regenerationVelocity, secondsUntilRegenerated);
             }
         }
 
