@@ -24,9 +24,13 @@ namespace Source.Enemies
         [SerializeField] private Animator animator;
         [SerializeField] private AudioClipData hissingClips;
 
+        [Header("Configuration")]
         [SerializeField] private float damage = 1;
         [SerializeField] private float movementSpeed = 1;
         [SerializeField] private float aggroRange = 10;
+        [SerializeField] private bool aggroUsingPlayerDirection;
+        [SerializeField] private float aggroDirectionAngle;
+        [SerializeField] private float aggroDirectionAngularWidth;
         [SerializeField] private float deaggroRange = 15;
         [SerializeField] private float maxPathRange = 20;
 
@@ -37,6 +41,7 @@ namespace Source.Enemies
 
         private float pathFindCooldown = 0.5f;
         private float updateTimer;
+        private float anguleToPlayer;
 
         private EnemyState state;
         private Vector3 initialPosition;
@@ -56,9 +61,8 @@ namespace Source.Enemies
                 case EnemyState.Idle:
                 {
                     animator.SetBool(Moving, false);
-                    
-                    var playerDistance = (player.transform.position - transform.position).magnitude;
-                    if (playerDistance < aggroRange)
+
+                    if (IsEnemyAggro())
                     {
                         SlowUpdatePath(player.transform.position);
                         if (path.status != NavMeshPathStatus.PathInvalid)
@@ -161,5 +165,92 @@ namespace Source.Enemies
                 }
             }
         }
+
+        private bool IsEnemyAggro()
+        {
+            var playerToEnemy = (player.transform.position - transform.position);
+            var playerDistance = playerToEnemy.magnitude;
+
+            return playerDistance < aggroRange
+                   && (!aggroUsingPlayerDirection || LookingAtPositionWithinBounds(player.transform.position, aggroDirectionAngle, aggroDirectionAngularWidth));
+        }
+
+        private bool LookingAtPositionWithinBounds(Vector3 position, float lookAngle, float lookAngularWidth)
+        {
+            var directionToPosition = (position - transform.position);
+            var directionToPositionXY = new Vector3(directionToPosition.x, directionToPosition.y, 0).normalized;
+            var lookBounds = CalculateLookBounds(lookAngle, lookAngularWidth);
+            
+            var angleToPlayer = Vector3.Angle(directionToPositionXY, lookBounds.Straight); //Whoops tried to use linear transformation (1 - dot), good lesson.  * 90;
+            anguleToPlayer = angleToPlayer;
+            
+            return angleToPlayer <= lookBounds.AngularWidth;
+        }
+
+        private LookBounds CalculateLookBounds(float angleDeg, float angularWidthDeg)
+        {
+            // Can repeat use of bounds.
+            var bounds = new LookBounds
+            {
+                Straight = new Vector3(
+                    Mathf.Cos(angleDeg * Mathf.Deg2Rad),
+                    Mathf.Sin(angleDeg * Mathf.Deg2Rad),
+                    0 
+                ),
+                Left = new Vector3(
+                    Mathf.Cos((angleDeg + angularWidthDeg) * Mathf.Deg2Rad),
+                    Mathf.Sin((angleDeg + angularWidthDeg)  * Mathf.Deg2Rad),
+                    0 
+                ),
+                Right = new Vector3(
+                    Mathf.Cos((angleDeg - angularWidthDeg) * Mathf.Deg2Rad),
+                    Mathf.Sin((angleDeg - angularWidthDeg)  * Mathf.Deg2Rad),
+                    0 
+                ),
+                AngularWidth = angularWidthDeg
+            };
+
+            return bounds;
+        }
+
+        private struct LookBounds
+        {
+            public Vector3 Left;
+            public Vector3 Straight;
+            public Vector3 Right;
+            public float AngularWidth;
+        }
+        
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            aggroDirectionAngle = Mathf.Clamp(aggroDirectionAngle, 0, 360);
+            aggroDirectionAngularWidth = Mathf.Clamp(aggroDirectionAngularWidth, 0, 180);
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            // Show aggro range
+            if (player != null && IsEnemyAggro())
+            {
+                Gizmos.color = Color.red;
+            }
+            else
+            {
+                Gizmos.color = Color.green;
+            }
+            
+            Gizmos.DrawWireSphere(transform.position, aggroRange);
+
+            if (aggroUsingPlayerDirection)
+            {
+                var bounds = CalculateLookBounds(aggroDirectionAngle, aggroDirectionAngularWidth);
+                
+                Gizmos.DrawLine(transform.position, transform.position + bounds.Straight * aggroRange);
+                Gizmos.DrawLine(transform.position, transform.position + bounds.Left * aggroRange);
+                Gizmos.DrawLine(transform.position, transform.position + bounds.Right * aggroRange);
+            }
+        }
+#endif
     }
 }
