@@ -246,10 +246,10 @@ namespace Source.Players
         }
         
         // In real game, should be inverted
-        public void TryTakeDamage(float damage)
+        public bool TryTakeDamage(float damage)
         {
             if (!canTakeDamage) 
-                return;
+                return false;
             
             currentHealth -= damage;
             currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
@@ -257,6 +257,8 @@ namespace Source.Players
             regeneratingHealth = false;
             damageTimer = timeUntilDamageable;
             canTakeDamage = false;
+
+            return true;
         }
 
         public void Respawn()

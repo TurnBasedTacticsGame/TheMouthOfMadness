@@ -16,6 +16,7 @@ namespace Source.Enemies
         {
             Idle,
             MovingToPlayer,
+            Attacked
         }
 
         [Header("Dependencies")]
@@ -23,9 +24,12 @@ namespace Source.Enemies
         [SerializeField] private AudioSource hissAudio;
         [SerializeField] private Animator animator;
         [SerializeField] private AudioClipData hissingClips;
+        [SerializeField] private Collider2D collider;
+        [SerializeField] private Collider2D damageTriggerCollider;
 
         [Header("Configuration")]
         [SerializeField] private float damage = 1;
+        [SerializeField] private float attackCooldown = 1f;
         [SerializeField] private float movementSpeed = 1;
         [SerializeField] private float aggroRange = 10;
         [SerializeField] private bool aggroUsingPlayerDirection;
@@ -42,6 +46,10 @@ namespace Source.Enemies
         private float pathFindCooldown = 0.5f;
         private float updateTimer;
         private float anguleToPlayer;
+
+        private EnemyState previousStateBeforeAttacking;
+        private bool Attacked => attackTimer > 0;
+        private float attackTimer = 1f;
 
         private EnemyState state;
         private Vector3 initialPosition;
@@ -107,6 +115,51 @@ namespace Source.Enemies
                     waypoints.RemoveAt(0);
                 }
             }
+            
+            UpdateDamageTrigger();
+        }
+
+        private void OnTriggerStay2D(Collider2D col)
+        {
+            if (Attacked)
+                return;
+            
+            if (col.attachedRigidbody != null && col.attachedRigidbody.TryGetComponent<Player>(out var player))
+            {
+                Debug.Log("Enemy collided with player");
+                var success = player.TryTakeDamage(damage);
+
+                if ( success)
+                {
+                    // Disable colliders (you can run past)
+                    //PlayHissAudio().Forget();
+                    collider.gameObject.SetActive(false);
+                    damageTriggerCollider.gameObject.SetActive(false);
+
+                    // Set cooldown
+                    attackTimer = attackCooldown;
+                    
+                    // Stop chasing
+                    previousStateBeforeAttacking = state;
+                    state = EnemyState.Attacked;
+                }
+            }
+        }
+
+        private void UpdateDamageTrigger()
+        {
+            if (!Attacked)
+                return;
+            
+            attackTimer -= Time.deltaTime;
+
+            if (attackTimer <= 0)
+            {
+                collider.gameObject.SetActive(true);
+                damageTriggerCollider.gameObject.SetActive(true);
+                state = previousStateBeforeAttacking;
+                attackTimer = 0;
+            }
         }
 
         private async UniTask PlayHissAudio()
@@ -115,17 +168,6 @@ namespace Source.Enemies
 
             hissAudio.clip = hissingClips.AudioClips[Random.Range(0, hissingClips.AudioClips.Length)];
             hissAudio.Play();
-        }
-
-        private void OnCollisionEnter2D(Collision2D col)
-        {
-            Debug.Log("Enemy collided " + col.rigidbody);
-            
-            if (col.rigidbody != null && col.rigidbody.TryGetComponent<Player>(out var player))
-            {
-                Debug.Log("Enemy collided with player");
-                player.TryTakeDamage(damage);
-            }
         }
 
         private float GetPathLength()
